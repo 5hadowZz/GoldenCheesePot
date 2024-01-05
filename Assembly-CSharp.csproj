@@ -56,6 +56,8 @@
     <Analyzer Include="D:\Visual Studio 2022\Visual Studio IDE\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Enemy\BaseState.cs" />
+    <Compile Include="Assets\Scripts\Enemy\StateMachine.cs" />
     <Compile Include="Assets\Scripts\Plant.cs" />
     <Compile Include="Assets\Scripts\Manager\DialogueMgr.cs" />
     <Compile Include="Assets\Scripts\Player\AttackArea.cs" />

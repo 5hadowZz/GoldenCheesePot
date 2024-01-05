@@ -31,7 +31,7 @@ public class DialogueMgr : MonoBehaviour
     private void Start()
     {
         dialoguePanel.SetActive(false);
-        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(gameObject.transform.root);
     }
 
 
