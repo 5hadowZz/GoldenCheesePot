@@ -24,7 +24,7 @@ public class PlantMgr : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;      
+        instance = this;
     }
 
 
@@ -80,6 +80,7 @@ public class PlantMgr : MonoBehaviour
     {
         plantList.Remove(plant);    // 植物管理器列表中清除植物
         plant.gameObject.tag = "Untagged";      // 改tag  让其不能被再次移除
+        plant.gameObject.layer = 0;             // 改layer 让生成时范围检测不算该已移除的植物
         plant.GetComponent<SpriteRenderer>().sprite = hole;     // 植物的图片改为洞
 
         Collider2D[] colliders = plant.GetComponents<Collider2D>();
@@ -93,20 +94,38 @@ public class PlantMgr : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// 随机生成植物生成位置
+    /// </summary>
+    /// <returns></returns>
     private Vector2 SpawnPos()
     {
-        // 随机生成的植物的位置
+        
         float randomX = Mathf.RoundToInt(Random.Range(center.x - size.x / 2, center.x + size.x / 2) / 0.0625f) * 0.0625f;
         float randomY = Mathf.RoundToInt(Random.Range(center.y - size.y / 2, center.y + size.y / 2) / 0.0625f) * 0.0625f;
         Vector2 spawnPos = new Vector2(randomX, randomY);
-        // 检测该位置是否有植物重叠   重叠了就重新生成位置
+        
+        spawnPos = CheckPos(spawnPos);
+
+        return spawnPos;
+    }
+
+
+    /// <summary>
+    /// // 检测该位置是否有植物重叠   重叠了就重新生成位置
+    /// </summary>
+    /// <param name="spawnPos"></param>
+    /// <returns></returns>
+    private Vector2 CheckPos(Vector2 spawnPos)
+    {
         Collider2D collider = Physics2D.OverlapBox(spawnPos, 2 * Vector2.one, 0f, 1 << LayerMask.NameToLayer("Plant"));
-        while (collider != null)
+
+        if (collider != null)
         {
-            randomX = Mathf.RoundToInt(Random.Range(center.x - size.x / 2, center.x + size.x / 2) / 0.0625f) * 0.0625f;
-            randomY = Mathf.RoundToInt(Random.Range(center.y - size.y / 2, center.y + size.y / 2) / 0.0625f) * 0.0625f;
-            spawnPos = new Vector2(randomX, randomY);
-            collider = Physics2D.OverlapBox(spawnPos, 2 * Vector2.one, 0f, 1 << LayerMask.NameToLayer("Plant"));
+            float randomX = Mathf.RoundToInt(Random.Range(center.x - size.x / 2, center.x + size.x / 2) / 0.0625f) * 0.0625f;
+            float randomY = Mathf.RoundToInt(Random.Range(center.y - size.y / 2, center.y + size.y / 2) / 0.0625f) * 0.0625f;
+            spawnPos = new Vector2(randomX, randomY);           
+            return CheckPos(spawnPos);
         }
 
         return spawnPos;
