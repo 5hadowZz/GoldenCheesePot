@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\StateMachine\Boss\WaitState.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\Boss\BossParamters.cs" />
     <Compile Include="Assets\Scripts\StateMachine\BaseState.cs" />
     <Compile Include="Assets\Scripts\StateMachine\StateMachine.cs" />
     <Compile Include="Assets\Scripts\Plant.cs" />
@@ -66,7 +67,8 @@
     <Compile Include="Assets\Scripts\Player\Player.cs" />
     <Compile Include="Assets\Scripts\Manager\PlantMgr.cs" />
     <Compile Include="Assets\Scripts\StateMachine\Enemy\Enemy.cs" />
-    <Compile Include="Assets\Scripts\StateMachine\Boss\BossParamters.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\Boss\CircleArea.cs" />
+    <Compile Include="Assets\Scripts\StateMachine\Boss\DashArea.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

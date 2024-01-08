@@ -79,7 +79,7 @@ public class Player : MonoBehaviour
                 // 攻击时在移动 按住了X和Y  就斜方向移动
                 rb.velocity = new Vector2(idleX * attackMove, idleY * attackMove);
             }
-            else 
+            else
             {
                 // 攻击时没在移动 就朝面朝向移动
                 rb.velocity = animator.GetFloat("SpeedX") == 0f ?
@@ -95,6 +95,12 @@ public class Player : MonoBehaviour
                 timer = attackOffset;
             }
         }
+    }
+
+
+    public void GetHurt(Transform attacker)
+    {
+        animator.SetTrigger("Hurt");
     }
 
 

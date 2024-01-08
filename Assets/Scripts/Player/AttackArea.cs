@@ -19,5 +19,10 @@ public class AttackArea : MonoBehaviour
         {
             collision.GetComponent<Enemy>()?.GetHit(transform);
         }
+
+        if (collision.CompareTag("Boss"))
+        {
+            collision.GetComponent<StateMachine>()?.GetHurt(transform);
+        }
     }
 }
