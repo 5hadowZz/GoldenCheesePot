@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    private static Player instance;
+    public static Player Instance => instance;
+
     private Rigidbody2D rb;
     private Animator animator;
 
@@ -11,17 +14,25 @@ public class Player : MonoBehaviour
     private float speedX, speedY;
     private float idleX, idleY;
     private float timer;    // 攻击间隔计时器
+    private bool isHurt = false;
+    private int curSpeed;
 
     [Header("移动相关")]
     public bool canMove = true;  // 是否可以移动  攻击、对话时等等使用
-    public int speed;
+    public int maxSpeed; 
     [Header("攻击相关")]
     public float attackOffset;   // 攻击间隔  外部调整
     public float attackMove;     // 攻击时的位移
+    [Header("属性相关")]
+    public int maxHP = 12;
+    public int curHP;
+    public int maxPower = 5;
+    public int curPower;
 
 
     private void Awake()
     {
+        instance = this;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
     }
@@ -40,6 +51,13 @@ public class Player : MonoBehaviour
     }
 
 
+    private void Start()
+    {
+        curHP = maxHP;
+        curSpeed = maxSpeed;
+    }
+
+
     public void Move()
     {
         if (!canMove)
@@ -50,7 +68,7 @@ public class Player : MonoBehaviour
         speedY = Input.GetAxisRaw("Vertical");
         dir = new Vector2(speedX, speedY).normalized;
         // 速度
-        rb.velocity = dir * speed * 0.0625f;
+        rb.velocity = dir * curSpeed * 0.0625f;
 
         if (dir != Vector2.zero)
         {
@@ -67,7 +85,7 @@ public class Player : MonoBehaviour
 
     public void Attack()
     {
-        if (Input.GetButtonDown("Attack") && timer >= attackOffset && canMove)
+        if (Input.GetButtonDown("Attack") && timer >= attackOffset && canMove && !isHurt)
         {
             rb.velocity = Vector2.zero;
             canMove = false;
@@ -100,7 +118,28 @@ public class Player : MonoBehaviour
 
     public void GetHurt(Transform attacker)
     {
-        animator.SetTrigger("Hurt");
+        if (curHP <= 0 || isHurt)
+            return;
+
+        curHP -= 1;
+        UIMgr.Instance.UpdateHP(curHP, false);
+
+        if (curHP == 0)
+        {
+            Dead();
+        }
+        else
+        {
+            isHurt = true;
+            animator.SetTrigger("Hurt");
+            curSpeed = maxSpeed / 2;
+        }
+    }
+
+
+    public void Dead()
+    {
+        canMove = false;
     }
 
 
@@ -110,6 +149,16 @@ public class Player : MonoBehaviour
     public void AttackOver()
     {
         canMove = true;
+    }
+
+
+    /// <summary>
+    /// 受伤结束事件  在帧动画中添加
+    /// </summary>
+    public void HurtOver()
+    {
+        isHurt = false;
+        curSpeed = maxSpeed;
     }
 
 
