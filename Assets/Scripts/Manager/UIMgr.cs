@@ -16,6 +16,7 @@ public class UIMgr : MonoBehaviour
     [Header("´ıÊ¹ÓÃSprite")]
     public Sprite stateMaxHP;
     public Sprite stateNormal;
+    public Image fadePanel;
 
     private void Awake()
     {

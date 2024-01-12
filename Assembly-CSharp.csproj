@@ -66,10 +66,14 @@
     <Compile Include="Assets\Scripts\Manager\DialogueMgr.cs" />
     <Compile Include="Assets\Scripts\Player\AttackArea.cs" />
     <Compile Include="Assets\Scripts\StateMachine\Boss\DashArea.cs" />
-    <Compile Include="Assets\Scripts\Talkable.cs" />
+    <Compile Include="Assets\Scripts\Dialogue\Talkable.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
     <Compile Include="Assets\Scripts\Manager\PlantMgr.cs" />
     <Compile Include="Assets\Scripts\StateMachine\Enemy\Enemy.cs" />
+    <Compile Include="Assets\Scripts\TeleportPoint.cs" />
+    <Compile Include="Assets\Scripts\Manager\SceneLoadMgr.cs" />
+    <Compile Include="Assets\Scripts\Main.cs" />
+    <Compile Include="Assets\Scripts\Shovel_in_Wood.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

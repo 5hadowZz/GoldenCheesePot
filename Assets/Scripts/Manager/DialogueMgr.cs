@@ -27,7 +27,6 @@ public class DialogueMgr : MonoBehaviour
     private void Start()
     {
         dialoguePanel.SetActive(false);
-        DontDestroyOnLoad(gameObject.transform.root);
     }
 
 
