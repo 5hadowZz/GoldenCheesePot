@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,12 +8,12 @@ public class UIMgr : MonoBehaviour
     private static UIMgr instance;
     public static UIMgr Instance => instance;
 
-    [Header("×´Ì¬À¸")]
+    [Header("çŠ¶æ€æ ")]
     public Image head;
     public Image state;
     public GameObject power;
     public GameObject hp;
-    [Header("´ıÊ¹ÓÃSprite")]
+    [Header("å¾…ä½¿ç”¨Sprite")]
     public Sprite stateMaxHP;
     public Sprite stateNormal;
     public Image fadePanel;
@@ -25,10 +25,10 @@ public class UIMgr : MonoBehaviour
 
 
     /// <summary>
-    /// ¸üĞÂÑªÁ¿UI
+    /// æ›´æ–°è¡€é‡UI
     /// </summary>
-    /// <param name="curHP">´«ÈëÑªÁ¿ÊıÖµ¸üĞÂºóµÄcurHP</param>
-    /// <param name="isAddHP">ÊÇ·ñÊÇ¼ÓÑª</param>
+    /// <param name="curHP">ä¼ å…¥è¡€é‡æ•°å€¼æ›´æ–°åçš„curHP</param>
+    /// <param name="isAddHP">æ˜¯å¦æ˜¯åŠ è¡€</param>
     public void UpdateHP(int curHP, bool isAddHP)
     {
         if (!isAddHP)
@@ -55,10 +55,10 @@ public class UIMgr : MonoBehaviour
 
 
     /// <summary>
-    /// ¸üĞÂÄÜÁ¿UI
+    /// æ›´æ–°èƒ½é‡UI
     /// </summary>
-    /// <param name="curPower">´«ÈëÄÜÁ¿ÊıÖµ¸üĞÂºóµÄÊı×Ö</param>
-    /// <param name="isAddPower">ÊÇ·ñÊÇ¼ÓÄÜÁ¿</param>
+    /// <param name="curPower">ä¼ å…¥èƒ½é‡æ•°å€¼æ›´æ–°åçš„æ•°å­—</param>
+    /// <param name="isAddPower">æ˜¯å¦æ˜¯åŠ èƒ½é‡</param>
     public void UpdatePower(int curPower, bool isAddPower)
     {
         if (!isAddPower)

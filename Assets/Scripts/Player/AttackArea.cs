@@ -9,7 +9,7 @@ public class AttackArea : MonoBehaviour
         if (collision.CompareTag("Plant"))
         {
             Plant plant = collision.GetComponent<Plant>();
-            if (plant != null)
+            if (plant != null && PlantMgr.Instance.plantList.Contains(plant))
             {
                 PlantMgr.Instance.RemovePlant(plant);
             }
@@ -22,7 +22,7 @@ public class AttackArea : MonoBehaviour
 
         if (collision.CompareTag("Boss"))
         {
-            collision.GetComponent<StateMachine>()?.GetHurt(transform);
+            collision.GetComponent<StateMachine>()?.GetHurt(GetComponent<Player>().atk);
         }
     }
 }

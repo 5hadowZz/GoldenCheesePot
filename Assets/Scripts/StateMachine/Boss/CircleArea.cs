@@ -8,7 +8,7 @@ public class CircleArea : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            collision.GetComponent<Player>()?.GetHurt(transform);
+            collision.GetComponent<Player>()?.GetHurt(GetComponent<BossParamters>().atk);
         }
     }
 }

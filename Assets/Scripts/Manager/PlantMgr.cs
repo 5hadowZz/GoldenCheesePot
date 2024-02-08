@@ -7,15 +7,16 @@ public class PlantMgr : MonoBehaviour
     private static PlantMgr instance;
     public static PlantMgr Instance => instance;
 
-    private List<Plant> plantList = new List<Plant>();
     private GameObject parent;
+    [HideInInspector]
+    public List<Plant> plantList = new List<Plant>();
 
     [Header("植物生成相关")]
     public GameObject[] plants;
     public int maxNum = 10;
     public float spawnOffset;   // 被采摘后 要隔多久生成下一个
     [Header("植物消失相关")]
-    public Sprite hole;
+    public GameObject hole;
     public float holeLifeTime;
     [Header("植物生成区域")]
     public Vector2 center;
@@ -79,17 +80,12 @@ public class PlantMgr : MonoBehaviour
     public void RemovePlant(Plant plant)
     {
         plantList.Remove(plant);    // 植物管理器列表中清除植物
-        plant.gameObject.tag = "Untagged";      // 改tag  让其不能被再次移除
-        plant.gameObject.layer = 0;             // 改layer 让生成时范围检测不算该已移除的植物
-        plant.GetComponent<SpriteRenderer>().sprite = hole;     // 植物的图片改为洞
 
-        Collider2D[] colliders = plant.GetComponents<Collider2D>();
-        foreach (Collider2D collider in colliders)
-        {
-            collider.isTrigger = true;          // 洞设为无碰撞体积
-        }
+        Destroy(plant.gameObject);
+        GameObject hole = Instantiate(this.hole, plant.transform.position + new Vector3(0, 0.3f, 0), Quaternion.identity);   // 生成洞
+        hole.transform.SetParent(parent.transform, false);  // 更改洞的父对象
 
-        Destroy(plant.gameObject, holeLifeTime);                // 一段时间后消除洞
+        Destroy(hole, holeLifeTime);                // 一段时间后消除洞
         Invoke("SpawnPlant", spawnOffset);                      // 一段时间后再次随机生成植物
     }
 
@@ -100,11 +96,11 @@ public class PlantMgr : MonoBehaviour
     /// <returns></returns>
     private Vector2 SpawnPos()
     {
-        
+
         float randomX = Mathf.RoundToInt(Random.Range(center.x - size.x / 2, center.x + size.x / 2) / 0.0625f) * 0.0625f;
         float randomY = Mathf.RoundToInt(Random.Range(center.y - size.y / 2, center.y + size.y / 2) / 0.0625f) * 0.0625f;
         Vector2 spawnPos = new Vector2(randomX, randomY);
-        
+
         spawnPos = CheckPos(spawnPos);
 
         return spawnPos;
@@ -124,7 +120,7 @@ public class PlantMgr : MonoBehaviour
         {
             float randomX = Mathf.RoundToInt(Random.Range(center.x - size.x / 2, center.x + size.x / 2) / 0.0625f) * 0.0625f;
             float randomY = Mathf.RoundToInt(Random.Range(center.y - size.y / 2, center.y + size.y / 2) / 0.0625f) * 0.0625f;
-            spawnPos = new Vector2(randomX, randomY);           
+            spawnPos = new Vector2(randomX, randomY);
             return CheckPos(spawnPos);
         }
 

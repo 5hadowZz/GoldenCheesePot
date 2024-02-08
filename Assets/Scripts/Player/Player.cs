@@ -19,8 +19,10 @@ public class Player : MonoBehaviour
 
     [Header("移动相关")]
     public bool canMove = true;  // 是否可以移动  攻击、对话时等等使用
-    public int maxSpeed; 
+    public int maxSpeed;
     [Header("攻击相关")]
+    private bool isAttack;  // 是否处于攻击状态
+    public int atk;
     public float attackOffset;   // 攻击间隔  外部调整
     public float attackMove;     // 攻击时的位移
     [Header("属性相关")]
@@ -60,8 +62,17 @@ public class Player : MonoBehaviour
 
     public void Move()
     {
+        if (isAttack)
+        {
+            return;     // 这里如果让攻击时velocity==0  会一直调用  导致不能攻击时移动  也就是这里会一直控制velocity==0
+        }
+
         if (!canMove)
+        {
+            animator.SetBool("isMoving", false);
+            rb.velocity = Vector2.zero;
             return;
+        }
 
         // 速度方向 归一化
         speedX = Input.GetAxisRaw("Horizontal");
@@ -85,23 +96,24 @@ public class Player : MonoBehaviour
 
     public void Attack()
     {
-        if (Input.GetButtonDown("Attack") && timer >= attackOffset && canMove && !isHurt)
+        if (Input.GetButtonDown("Attack") && timer >= attackOffset && canMove && !isAttack && !isHurt)      // canMove是由其他如对话系统控制  !canMove时就不能攻击  isAttack由攻击本身控制  必须一次攻击结束 让isAttack为true时 才能攻击
         {
             rb.velocity = Vector2.zero;
-            canMove = false;
+            //canMove = false;
+            isAttack = true;
             animator.SetTrigger("Attack");
             timer = 0f;
             // 攻击位移
             if (animator.GetBool("isMoving"))
             {
-                // 攻击时在移动 按住了X和Y  就斜方向移动
-                rb.velocity = new Vector2(idleX * attackMove, idleY * attackMove);
+                // 攻击时在移动 按住了X和Y  就斜方向移动              
+                rb.velocity = dir * attackMove * 0.0625f;
             }
             else
             {
                 // 攻击时没在移动 就朝面朝向移动
                 rb.velocity = animator.GetFloat("SpeedX") == 0f ?
-                    new Vector2(rb.velocity.x, idleY * attackMove) : new Vector2(idleX * attackMove, rb.velocity.y);
+                    new Vector2(rb.velocity.x, idleY * attackMove) * 0.0625f : new Vector2(idleX * attackMove, rb.velocity.y) * 0.0625f;
             }
         }
 
@@ -116,15 +128,15 @@ public class Player : MonoBehaviour
     }
 
 
-    public void GetHurt(Transform attacker)
+    public void GetHurt(int atk)
     {
         if (curHP <= 0 || isHurt)
             return;
 
-        curHP -= 1;
+        curHP -= atk;
         UIMgr.Instance.UpdateHP(curHP, false);
 
-        if (curHP == 0)
+        if (curHP <= 0)
         {
             Dead();
         }
@@ -148,7 +160,8 @@ public class Player : MonoBehaviour
     /// </summary>
     public void AttackOver()
     {
-        canMove = true;
+        //canMove = true;
+        isAttack = false;
     }
 
 

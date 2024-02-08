@@ -3,11 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+public enum E_Scene
+{
+    Scene1,
+    Scene1_HideScene,
+    Scene1_Shovel,
+    Test
+}
+
+
 public class Main : MonoBehaviour
 {
-    void Start()
+    public E_Scene scene;
+
+    private void Start()
     {
         DontDestroyOnLoad(gameObject);
-        SceneManager.LoadScene("Scene1");
+        SceneManager.LoadScene(scene.ToString());
     }
 }

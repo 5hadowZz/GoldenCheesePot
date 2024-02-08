@@ -1,18 +1,28 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Shovel_in_Wood : MonoBehaviour
 {
     private bool canInteract = false;
-    private bool isTouch = false;
     public Sprite wood;
+
+
+    private void Start()
+    {
+        if (GameDataMgr.Instance.sceneData.Scene1_Shovel_isTouch)
+        {
+            GetComponent<SpriteRenderer>().sprite = wood;
+        }
+    }
+
 
     private void Update()
     {
-        if (!isTouch && canInteract && Input.GetKeyDown(KeyCode.E))
+        // 进入交互区域 且 按下交互键 且 未被交互过
+        if (canInteract && Input.GetKeyDown(KeyCode.E) && !GameDataMgr.Instance.sceneData.Scene1_Shovel_isTouch)
         {
-            isTouch = true;
+            GameDataMgr.Instance.sceneData.Scene1_Shovel_isTouch = true;
             GetComponent<SpriteRenderer>().sprite = wood;
         }
     }

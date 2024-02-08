@@ -17,7 +17,7 @@ public class StateMachine : MonoBehaviour
     public Dictionary<E_BossState, BaseState> stateDic = new();
     public BossParamters paramters = new();
     public BaseState curState;
-    
+
     public E_BossState preState;
 
 
@@ -35,13 +35,16 @@ public class StateMachine : MonoBehaviour
         stateDic.Add(E_BossState.Dash, new DashState(this));
         stateDic.Add(E_BossState.Circle, new CircleState(this));
 
-        ChangeState(E_BossState.Dash);
+        if (paramters.target != null)
+        {
+            ChangeState(E_BossState.Dash);
+        }
     }
 
 
     private void Update()
     {
-        curState.OnUpdate();
+        curState?.OnUpdate();
     }
 
 
@@ -71,7 +74,7 @@ public class StateMachine : MonoBehaviour
             if (probability >= 0.5f)
                 ChangeState(E_BossState.Run);
             else
-                ChangeState(E_BossState.Dash);         
+                ChangeState(E_BossState.Dash);
         }
 
         if (preState == E_BossState.Dash)
@@ -94,9 +97,10 @@ public class StateMachine : MonoBehaviour
     }
 
 
-    public void GetHurt(Transform attacker)
+    public void GetHurt(int atk)
     {
         paramters.animator.SetTrigger("Hurt");
+        paramters.hp -= atk;
     }
 
 

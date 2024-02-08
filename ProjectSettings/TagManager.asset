@@ -7,6 +7,7 @@ TagManager:
   - Plant
   - Enemy
   - Boss
+  - PlayerAttack
   layers:
   - Default
   - TransparentFX

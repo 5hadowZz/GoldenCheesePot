@@ -1,11 +1,14 @@
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using UnityEngine.Events;
 
 public class DialogueMgr : MonoBehaviour
 {
     private static DialogueMgr instance;
     public static DialogueMgr Instance => instance;
+
+    private UnityAction callBack;
 
     public GameObject dialoguePanel;
     public Text dialogueText;
@@ -13,6 +16,7 @@ public class DialogueMgr : MonoBehaviour
 
     public float dialogueSpeed;
     public string[] dialogueLines;
+    
     [SerializeField]
     private int currentLine;    // 当前句子索引
     private bool isScrolling;   // 是否正在输出句子
@@ -51,17 +55,21 @@ public class DialogueMgr : MonoBehaviour
             {
                 dialoguePanel.SetActive(false);
                 currentLine = 0;
-                FindObjectOfType<Player>().canMove = true;  // 恢复移动
+                Player.Instance.canMove = true;  // 恢复移动
+
+                callBack?.Invoke();     // 对话关闭后  执行回调
             }
         }
     }
 
 
-    public void ShowDialogue(string[] _lines)
+    public void ShowDialogue(string[] _lines, UnityAction callBack = null)
     {
         // 如果正在对话  再按E调用该函数没用
         if (dialoguePanel.activeInHierarchy)
             return;
+
+        this.callBack = callBack;
 
         dialogueText.text = "";
 
@@ -75,7 +83,7 @@ public class DialogueMgr : MonoBehaviour
             () => { isScrolling = false; });
         dialoguePanel.SetActive(true);
 
-        FindObjectOfType<Player>().canMove = false;     // 让主角不能移动
+        Player.Instance.canMove = false;     // 让主角不能移动
     }
 
 

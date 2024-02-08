@@ -1,4 +1,4 @@
-using DG.Tweening;
+﻿using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,7 +26,7 @@ public class SceneLoadMgr : MonoBehaviour
 
             ao.completed += (param) =>
             {
-                // DOFade��ȥ
+                // DOFade回去
                 UIMgr.Instance.fadePanel.DOFade(0, 1f);
             };
         });

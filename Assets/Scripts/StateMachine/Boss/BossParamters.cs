@@ -11,6 +11,8 @@ public class BossParamters
     [HideInInspector] public float waitTime;
     public Transform target;
     public int hp = 100;
+    public int atk = 1;
+
     public float circleWaitTime;
     public float dashWaitTime;
     public float runWaitTime;
@@ -21,7 +23,5 @@ public class BossParamters
     public float dashOffset = 4f;
     public float runSpeed = 5f;
 
-    public float checkRadius;
-
-    
+    public float checkRadius; 
 }
