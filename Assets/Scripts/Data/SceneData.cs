@@ -10,5 +10,4 @@ public class SceneData
     // 木中铲子场景
     public bool Scene1_Shovel_isTouch;
 
-
 }

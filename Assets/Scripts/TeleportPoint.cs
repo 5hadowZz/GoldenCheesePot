@@ -21,10 +21,9 @@ public class TeleportPoint : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") && !collision.isTrigger)     // 因为player身上有2个collider  这样写可以防止它触发2次该函数
         {
-            SceneLoadMgr.Instance.sourceScene = SceneManager.GetActiveScene().name;           
-
+            SceneLoadMgr.Instance.sourceScene = SceneManager.GetActiveScene().name;
             SceneLoadMgr.Instance.Load(gameObject.name);
         }
     }

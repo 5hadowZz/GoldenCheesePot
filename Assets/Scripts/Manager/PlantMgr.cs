@@ -108,7 +108,7 @@ public class PlantMgr : MonoBehaviour
 
 
     /// <summary>
-    /// // 检测该位置是否有植物重叠   重叠了就重新生成位置
+    /// 检测该位置是否有植物重叠   重叠了就重新生成位置
     /// </summary>
     /// <param name="spawnPos"></param>
     /// <returns></returns>
@@ -125,5 +125,24 @@ public class PlantMgr : MonoBehaviour
         }
 
         return spawnPos;
+    }
+
+
+    /// <summary>
+    /// 装饰植物消失时调用
+    /// </summary>
+    public void RemoveOrnament(Ornament ornament)
+    {
+        StartCoroutine(RealRemoveOrnament(ornament));
+    }
+    private IEnumerator RealRemoveOrnament(Ornament ornament)
+    {
+        ornament.gameObject.SetActive(false);    // 隐藏装饰物
+        GameObject hole = Instantiate(ornament.hole, ornament.transform.position, Quaternion.identity);   // 生成洞
+
+        yield return new WaitForSeconds(ornament.holeLifeTime);      // 等待一段时间
+
+        Destroy(hole);                           // 消除洞
+        ornament.gameObject.SetActive(true);     // 显示装饰物
     }
 }

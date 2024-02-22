@@ -57,28 +57,33 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\StateMachine\Boss\WaitState.cs" />
+    <Compile Include="Assets\Scripts\Manager\BagMgr.cs" />
     <Compile Include="Assets\Scripts\Map\Scene1\Scene1\Obstacle_Scene1.cs" />
     <Compile Include="Assets\Scripts\StateMachine\Boss\BossParamters.cs" />
     <Compile Include="Assets\Scripts\StateMachine\Boss\CircleArea.cs" />
+    <Compile Include="Assets\Scripts\Manager\GameDataMgr.cs" />
     <Compile Include="Assets\Scripts\StateMachine\BaseState.cs" />
+    <Compile Include="Assets\Scripts\Plants\Ornament.cs" />
+    <Compile Include="Assets\Scripts\Data\PlayerData.cs" />
     <Compile Include="Assets\Scripts\Map\Test\Test_FirstEnterBoss.cs" />
+    <Compile Include="Assets\Scripts\Inventory\Slot.cs" />
     <Compile Include="Assets\Scripts\Manager\SceneLoadMgr.cs" />
     <Compile Include="Assets\Scripts\StateMachine\StateMachine.cs" />
     <Compile Include="Assets\Scripts\Map\Scene1\Scene1_Shovel\Shovel_in_Wood.cs" />
     <Compile Include="Assets\Scripts\Main.cs" />
     <Compile Include="Assets\Scripts\Manager\UIMgr.cs" />
-    <Compile Include="Assets\Scripts\Plant.cs" />
+    <Compile Include="Assets\Scripts\Plants\Plant.cs" />
     <Compile Include="Assets\Scripts\Manager\DialogueMgr.cs" />
     <Compile Include="Assets\Scripts\Player\AttackArea.cs" />
     <Compile Include="Assets\Scripts\StateMachine\Boss\DashArea.cs" />
     <Compile Include="Assets\Scripts\Dialogue\Talkable.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
     <Compile Include="Assets\Scripts\Manager\PlantMgr.cs" />
+    <Compile Include="Assets\Scripts\Data\SceneData.cs" />
     <Compile Include="Assets\Scripts\TeleportPoint.cs" />
     <Compile Include="Assets\Scripts\StateMachine\Enemy\Enemy.cs" />
-    <Compile Include="Assets\Scripts\Data\PlayerData.cs" />
-    <Compile Include="Assets\Scripts\Manager\GameDataMgr.cs" />
-    <Compile Include="Assets\Scripts\Data\SceneData.cs" />
+    <Compile Include="Assets\Scripts\Inventory\Item.cs" />
+    <Compile Include="Assets\Scripts\AA_StartPanel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

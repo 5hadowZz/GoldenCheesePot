@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Boss
   - PlayerAttack
+  - Ornament
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - Plant
   - Enemy
   - Boss
-  - 
+  - Ornament
   - 
   - 
   - 

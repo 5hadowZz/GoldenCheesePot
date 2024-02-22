@@ -15,6 +15,11 @@ public class AttackArea : MonoBehaviour
             }
         }
 
+        if (collision.CompareTag("Ornament"))
+        {
+            PlantMgr.Instance.RemoveOrnament(collision.GetComponent<Ornament>());
+        }
+
         if (collision.CompareTag("Enemy"))
         {
             collision.GetComponent<Enemy>()?.GetHit(transform);

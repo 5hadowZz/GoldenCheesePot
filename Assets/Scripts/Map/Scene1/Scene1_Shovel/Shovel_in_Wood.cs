@@ -8,9 +8,10 @@ public class Shovel_in_Wood : MonoBehaviour
     public Sprite wood;
 
 
+
     private void Start()
     {
-        if (GameDataMgr.Instance.sceneData.Scene1_Shovel_isTouch)
+        if (GameDataMgr.Instance.SceneData.Scene1_Shovel_isTouch)
         {
             GetComponent<SpriteRenderer>().sprite = wood;
         }
@@ -20,9 +21,9 @@ public class Shovel_in_Wood : MonoBehaviour
     private void Update()
     {
         // 进入交互区域 且 按下交互键 且 未被交互过
-        if (canInteract && Input.GetKeyDown(KeyCode.E) && !GameDataMgr.Instance.sceneData.Scene1_Shovel_isTouch)
+        if (canInteract && Input.GetKeyDown(KeyCode.E) && !GameDataMgr.Instance.SceneData.Scene1_Shovel_isTouch)
         {
-            GameDataMgr.Instance.sceneData.Scene1_Shovel_isTouch = true;
+            GameDataMgr.Instance.SceneData.Scene1_Shovel_isTouch = true;
             GetComponent<SpriteRenderer>().sprite = wood;
         }
     }

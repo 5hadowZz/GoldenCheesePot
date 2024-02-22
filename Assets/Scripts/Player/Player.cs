@@ -64,7 +64,7 @@ public class Player : MonoBehaviour
     {
         if (isAttack)
         {
-            return;     // 这里如果让攻击时velocity==0  会一直调用  导致不能攻击时移动  也就是这里会一直控制velocity==0
+            return;     // 由于Move函数一直在Update调用  这里如果让攻击时velocity==0  会导致不能攻击时移动
         }
 
         if (!canMove)

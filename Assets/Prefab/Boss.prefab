@@ -152,7 +152,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3723491178564958325
 Transform:
   m_ObjectHideFlags: 0
@@ -312,6 +312,7 @@ MonoBehaviour:
     waitTime: 2
     target: {fileID: 0}
     hp: 100
+    atk: 1
     circleWaitTime: 0.5
     dashWaitTime: 0.75
     runWaitTime: 0.2

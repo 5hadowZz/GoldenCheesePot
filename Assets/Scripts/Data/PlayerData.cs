@@ -11,4 +11,7 @@ public class PlayerData
     public float posY;
     public int hp;
     //public int power;
+
+    // 背包物品
+    public List<ItemInfo> bagItemInfos;
 }
