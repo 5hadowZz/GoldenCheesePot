@@ -24,6 +24,9 @@ public class WaitState : BaseState
 
     public override void OnUpdate()
     {
+        if (this.paramters.target == null)
+            return;
+
         dir = stateMachine.transform.position - paramters.target.position;
         paramters.sr.flipX = dir.x < 0 ? false : true;
 
@@ -143,7 +146,7 @@ public class DashState : BaseState
 
 
     public override void OnEnter()
-    {       
+    {
         curPos = stateMachine.transform.position;
         dir = (paramters.target.position - curPos).normalized;
         paramters.sr.flipX = dir.x < 0 ? true : false;
@@ -198,7 +201,7 @@ public class CircleState : BaseState
             paramters.animator.SetTrigger("Circle");
         }
         else
-        {                     
+        {
             paramters.animator.SetBool("Run", true);
             canToTarget = true;
         }
@@ -217,7 +220,7 @@ public class CircleState : BaseState
             {
                 paramters.animator.SetBool("Run", false);
                 paramters.sr.flipX = false;
-                paramters.animator.SetTrigger("Circle");                
+                paramters.animator.SetTrigger("Circle");
             });
         }
 
@@ -252,7 +255,7 @@ public class RunState : BaseState
 
 
     public override void OnEnter()
-    {       
+    {
         float randomAngle = Random.Range(0f, 360f);
         float randomX = paramters.target.position.x + 2f * Mathf.Cos(randomAngle);
         float randomY = paramters.target.position.y + 2f * Mathf.Sin(randomAngle);

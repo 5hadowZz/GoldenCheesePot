@@ -9,6 +9,8 @@ TagManager:
   - Boss
   - PlayerAttack
   - Ornament
+  - NPC
+  - Obstacle
   layers:
   - Default
   - TransparentFX
@@ -20,7 +22,7 @@ TagManager:
   - Plant
   - Enemy
   - Boss
-  - Ornament
+  - 
   - 
   - 
   - 
@@ -43,6 +45,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 132786937
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

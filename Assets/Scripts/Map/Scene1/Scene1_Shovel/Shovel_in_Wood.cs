@@ -25,6 +25,8 @@ public class Shovel_in_Wood : MonoBehaviour
         {
             GameDataMgr.Instance.SceneData.Scene1_Shovel_isTouch = true;
             GetComponent<SpriteRenderer>().sprite = wood;
+            // 让Player可以攻击
+            Player.Instance.canAttack = true;
         }
     }
 

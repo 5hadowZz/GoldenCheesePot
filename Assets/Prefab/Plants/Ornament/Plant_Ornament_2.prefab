@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 7495746779942451305}
   - component: {fileID: 7495746779942451304}
   - component: {fileID: 7495746779942451306}
-  - component: {fileID: 7495746779942451307}
-  m_Layer: 10
+  - component: {fileID: 1485027771507299291}
+  m_Layer: 7
   m_Name: Plant_Ornament_2
   m_TagString: Ornament
   m_Icon: {fileID: 0}
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 2130441417, guid: 189ad1a982396c74485f626d74274702, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6668cf79b98dafb4cbf876ba0f06f1a3, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -112,7 +112,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.20877534, y: 0.070696026}
   m_EdgeRadius: 0
---- !u!114 &7495746779942451307
+--- !u!114 &1485027771507299291
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121,9 +121,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 7495746779942451311}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a29aa082374081c438df57d903f32232, type: 3}
+  m_Script: {fileID: 11500000, guid: e0f6f7cc07e272b4f991603a62fd2c0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ornament: {fileID: 7495746779942451311}
-  hole: {fileID: 5784019967980098002, guid: 8319371773dcb1745a4d7e3a3df286d5, type: 3}
-  holeLifeTime: 45
+  canPick: 0
+  item: {fileID: 0}
+  isBigPlant: 0
+  plantPrefabPath: PlantsPrefab/Ornament/Plant_Ornament_2
+  pos: {x: 0, y: 0}
+  isSpecialPlant: 0
+  isOrnamentPlant: 1

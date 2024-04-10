@@ -15,6 +15,24 @@ EditorBuildSettings:
     path: Assets/Scenes/Scene1_Shovel.unity
     guid: 7d0afc616318835418539008e255b4a2
   - enabled: 1
+    path: Assets/Scenes/Scene2_Main.unity
+    guid: a1fc6b7506b34a84695cb5f7a97d4b88
+  - enabled: 1
+    path: Assets/Scenes/Scene2_Branch.unity
+    guid: c7bb064780f05204199e2b7dbab54005
+  - enabled: 1
+    path: Assets/Scenes/Scene3_Main.unity
+    guid: 5494d1173ee3ae7448661eafb58bb9d4
+  - enabled: 1
+    path: Assets/Scenes/Scene3_Branch.unity
+    guid: 710df5d318e9d8940a9fe48dbcb1fffe
+  - enabled: 1
+    path: Assets/Scenes/Scene4_Main.unity
+    guid: 595bad3a5228c984cb88fac2e4255c52
+  - enabled: 1
+    path: Assets/Scenes/Scene4_Branch.unity
+    guid: eaa81ca59c43acc4c97f5ce39986d680
+  - enabled: 1
     path: Assets/Scenes/Test.unity
     guid: 531f9bb78f9c2754f9f80074aea6190e
   m_configObjects: {}

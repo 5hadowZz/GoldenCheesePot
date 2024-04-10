@@ -65,6 +65,13 @@ public class Slot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
 
             ExchangeIndex(BagMgr.Instance.slots.IndexOf(gameObject), BagMgr.Instance.slots.IndexOf(target));
         }
+        // 如果下方物体为垃圾桶 删除物体 并弹回Slot
+        else if (eventData.pointerCurrentRaycast.gameObject.name.StartsWith("Ash-bin"))
+        {
+            DeleteItem();
+            transform.position = originalSlotPos;
+        }
+        // 否则 弹回
         else
         {            
             transform.position = originalSlotPos;
@@ -74,19 +81,36 @@ public class Slot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
     }
 
 
+    /// <summary>
+    /// 交换背包中两个物体
+    /// </summary>
+    /// <param name="index1"></param>
+    /// <param name="index2"></param>
     private void ExchangeIndex(int index1, int index2)
     {
+        // 交换两个Slot在父物体下的位置
         Transform child1 = transform.parent.GetChild(index1);
         Transform child2 = transform.parent.GetChild(index2);
         child1.SetSiblingIndex(index2);
         child2.SetSiblingIndex(index1);
 
+        // 交换两个Item在背包中的存储索引
         Item tempItem = BagMgr.Instance.items[index1];
         BagMgr.Instance.items[index1] = BagMgr.Instance.items[index2];
         BagMgr.Instance.items[index2] = tempItem;
 
+        // 交换两个Slot在背包中的存储索引
         GameObject tempSlot = BagMgr.Instance.slots[index1];
         BagMgr.Instance.slots[index1] = BagMgr.Instance.slots[index2];
         BagMgr.Instance.slots[index2] = tempSlot;
+    }
+
+
+    /// <summary>
+    /// 删除背包中物体
+    /// </summary>
+    private void DeleteItem()
+    {
+        BagMgr.Instance.AddToBag(null, BagMgr.Instance.slots.IndexOf(gameObject));
     }
 }

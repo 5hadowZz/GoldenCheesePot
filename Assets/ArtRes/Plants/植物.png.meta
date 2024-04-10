@@ -272,27 +272,6 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "Plant_Normal_Bag_\u714E\u86CB\u8349"
-      rect:
-        serializedVersion: 2
-        x: 78
-        y: 86
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d835c0d062d20534288e6f4ffa5290be
-      internalID: -1181854622
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: "Plant_Normal_Bag_\u70C8\u706B\u8393\u679C"
       rect:
         serializedVersion: 2
@@ -372,69 +351,6 @@ TextureImporter:
       bones: []
       spriteID: ea2daf0fcfae8c744ba44930d004ba96
       internalID: 2070157459
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Plant_Ornament_1
-      rect:
-        serializedVersion: 2
-        x: 53
-        y: 44
-        width: 7
-        height: 6
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 48680ee1f80c2ff47bbabb2eb79c0c8c
-      internalID: 343084371
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Plant_Ornament_2
-      rect:
-        serializedVersion: 2
-        x: 77
-        y: 43
-        width: 5
-        height: 10
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4ec89174efee8ad40a90b6023126ca13
-      internalID: 2130441417
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Plant_Ornament_3
-      rect:
-        serializedVersion: 2
-        x: 102
-        y: 43
-        width: 5
-        height: 10
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 705f9f78ab2667648b1e577abc8f3b3b
-      internalID: 1571996826
       vertices: []
       indices: 
       edges: []

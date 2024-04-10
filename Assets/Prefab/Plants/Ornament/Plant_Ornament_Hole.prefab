@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5784019967980098000}
   - component: {fileID: 5784019967980098003}
+  - component: {fileID: -8025100737419561031}
   m_Layer: 0
   m_Name: Plant_Ornament_Hole
   m_TagString: Untagged
@@ -84,3 +85,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
+--- !u!114 &-8025100737419561031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5784019967980098002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cc3681767b04684cb3ab049b8fc1121, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  holeLifeTime: 20
+  holePrefabPath: PlantsPrefab/Ornament/Plant_Ornament_Hole
+  pos: {x: 0, y: 0}

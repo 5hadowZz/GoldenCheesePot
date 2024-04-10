@@ -47,5 +47,4 @@ MonoBehaviour:
   info:
     itemName: "\u9762\u5305\u8611\u83C7"
     spritePath: "Plants/Plant_Normal_Bag_\u9762\u5305\u8611\u83C7"
-  itemName: "\u9762\u5305\u8611\u83C7"
-  spritePath: "Plants/Plant_Normal_Bag_\u9762\u5305\u8611\u83C7"
+    itemPath: "BagItems/Plant_Normal_Bag_\u9762\u5305\u8611\u83C7"

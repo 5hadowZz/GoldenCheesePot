@@ -6,18 +6,13 @@ public class AttackArea : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Plant"))
+        if (collision.CompareTag("Plant") || collision.CompareTag("Ornament"))
         {
             Plant plant = collision.GetComponent<Plant>();
             if (plant != null && PlantMgr.Instance.plantList.Contains(plant))
             {
-                PlantMgr.Instance.RemovePlant(plant);
+                plant.transform.parent.GetComponent<PlantZone>().RemovePlant(plant);
             }
-        }
-
-        if (collision.CompareTag("Ornament"))
-        {
-            PlantMgr.Instance.RemoveOrnament(collision.GetComponent<Ornament>());
         }
 
         if (collision.CompareTag("Enemy"))
@@ -27,7 +22,12 @@ public class AttackArea : MonoBehaviour
 
         if (collision.CompareTag("Boss"))
         {
-            collision.GetComponent<StateMachine>()?.GetHurt(GetComponent<Player>().atk);
+            collision.GetComponent<StateMachine>()?.GetHurt(transform.parent.GetComponent<Player>().atk);
+        }
+
+        if (collision.CompareTag("Obstacle"))
+        {
+            Destroy(collision.gameObject);
         }
     }
 }

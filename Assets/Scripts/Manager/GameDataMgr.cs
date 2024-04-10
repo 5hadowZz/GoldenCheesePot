@@ -45,14 +45,6 @@ public class GameDataMgr : MonoBehaviour
         LoadPlayerData();
     }
 
-    // Load数据同时加载场景
-    public void ClickLoad()
-    {
-        LoadSceneData();
-        LoadPlayerData();
-        SceneLoadMgr.Instance.Load(sceneData.sceneName);
-    }
-
 
     /// <summary>
     /// 存储玩家数据
@@ -65,6 +57,7 @@ public class GameDataMgr : MonoBehaviour
         PlayerData.hp = Player.Instance.curHP;
         PlayerData.posX = Player.Instance.transform.position.x;
         PlayerData.posY = Player.Instance.transform.position.y;
+
         
         for (int i = 0; i < BagMgr.Instance.items.Count; i++)
         {
@@ -176,5 +169,21 @@ public class GameDataMgr : MonoBehaviour
 
         //--------------------------------------------------------------------------------------------------
 
+    }
+
+
+    public void ItemDataLoadToBag()
+    {
+        //数据已经读取完毕后AddToBag 使用其重载 添加到背包指定位置
+        for (int i = 0; i < PlayerData.bagItemInfos.Count; i++)
+        {
+            if (PlayerData.bagItemInfos[i] == null)
+            {
+                BagMgr.Instance.AddToBag(null, i);
+                continue;
+            }
+
+            BagMgr.Instance.AddToBag(Resources.Load<Item>(PlayerData.bagItemInfos[i].itemPath), i);
+        }
     }
 }

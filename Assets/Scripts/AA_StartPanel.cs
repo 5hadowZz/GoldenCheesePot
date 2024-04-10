@@ -2,24 +2,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum E_Scene
+{
+    Scene1,
+    Scene1_HideScene,
+    Scene1_Shovel,
+    Scene2_Main,
+    Scene2_Branch,
+    Scene3_Main,
+    Scene3_Branch,
+    Scene4_Main,
+    Scene4_Branch,
+    Test
+}
+
+
 public class AA_StartPanel : MonoBehaviour
 {
+    public E_Scene scene;
+    public bool isTestMode;
+
+
     public void EnterGame()
-    {
-        SceneLoadMgr.Instance.Load(GameDataMgr.Instance.SceneData.sceneName);
+    {        
+        // GameDataMgr.Instance.Load();    // 读取数据  //GameDataMgr的Awake中已经Load了一次数据
+        if (isTestMode)
+        {
+            SceneLoadMgr.Instance.Load(scene.ToString());
+        }
+        else
+        {
+            SceneLoadMgr.Instance.Load(GameDataMgr.Instance.SceneData.sceneName);
+        }
+
         gameObject.SetActive(false);
 
-
-        //读取数据后AddToBag 使用其重载 添加到背包指定位置
-        for (int i = 0; i < GameDataMgr.Instance.PlayerData.bagItemInfos.Count; i++)
-        {
-            if (GameDataMgr.Instance.PlayerData.bagItemInfos[i] == null)
-            {
-                BagMgr.Instance.AddToBag(null, i);
-                continue;
-            }
-
-            BagMgr.Instance.AddToBag(Resources.Load<Item>(GameDataMgr.Instance.PlayerData.bagItemInfos[i].itemPath), i);
-        }
+        GameDataMgr.Instance.ItemDataLoadToBag();   // GameDataMgr中的背包物品数据  加载到背包
     }
 }

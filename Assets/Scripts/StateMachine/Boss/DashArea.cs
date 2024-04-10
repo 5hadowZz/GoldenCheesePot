@@ -8,7 +8,7 @@ public class DashArea : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            collision.GetComponent<Player>()?.GetHurt(GetComponent<BossParamters>().atk);
+            collision.GetComponent<Player>()?.GetHurt(transform.parent.GetComponent<StateMachine>().paramters.atk);
         }
     }
 }

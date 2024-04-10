@@ -1,8 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class BagMgr : MonoBehaviour
 {
@@ -37,8 +37,23 @@ public class BagMgr : MonoBehaviour
     }
 
 
-    public void AddToBag(Item _item)
+    public void AddToBag(Item _item, bool isBigPlant = false)
     {
+        if (isBigPlant)
+        {
+            for (int i = 0; i < items.Count; i++)
+            {
+                if (items[i] == null)
+                {
+                    // 添加到背包数据
+                    items[i] = _item;
+                    // 更新插槽显示
+                    slots[i].GetComponent<Slot>().UpdateSlot(_item);
+                }
+            }
+            return;
+        }
+
         for (int i = 0; i < items.Count; i++)
         {
             if (items[i] == null)
@@ -63,5 +78,26 @@ public class BagMgr : MonoBehaviour
         items[index] = _item;
         // 更新插槽显示
         slots[index].GetComponent<Slot>().UpdateSlot(_item);
+    }
+
+
+    /// <summary>
+    /// 删除背包中相应数量的物品
+    /// </summary>
+    /// <param name="_item"></param>
+    /// <param name="_num">要删除的物品的数量</param>
+    public void DeleteItem(Item _item, int _num)
+    {
+        int num = _num;
+
+        for (int i = 0; i < items.Count; i++)
+        {
+            if (num != 0 && _item.info.itemName == items[i].info.itemName)
+            {
+                items[i] = null;
+                slots[i].GetComponent<Slot>().UpdateSlot(null);
+                --num;
+            }
+        }
     }
 }

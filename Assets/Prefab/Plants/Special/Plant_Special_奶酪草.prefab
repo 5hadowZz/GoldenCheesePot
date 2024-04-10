@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 4705249819277530257}
   - component: {fileID: 4705249819277530271}
   - component: {fileID: 4705249819277530270}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: "Plant_Special_\u5976\u916A\u8349"
-  m_TagString: Untagged
+  m_TagString: Plant
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -101,6 +101,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canPick: 0
   item: {fileID: 5682246144477179899, guid: fb5b75d6d75f11a4b975947674a0b206, type: 3}
+  isBigPlant: 0
+  isSpecialPlant: 1
+  plantPrefabPath: "PlantsPrefab/Special/Plant_Special_\u5976\u916A\u8349"
+  pos: {x: 0, y: 0}
 --- !u!61 &4705249819277530271
 BoxCollider2D:
   m_ObjectHideFlags: 0

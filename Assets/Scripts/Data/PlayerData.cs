@@ -14,4 +14,7 @@ public class PlayerData
 
     // 背包物品
     public List<ItemInfo> bagItemInfos;
+
+    // 任务列表
+    
 }

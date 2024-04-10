@@ -1,6 +1,8 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -21,6 +23,7 @@ public class Player : MonoBehaviour
     public bool canMove = true;  // 是否可以移动  攻击、对话时等等使用
     public int maxSpeed;
     [Header("攻击相关")]
+    public bool canAttack;
     private bool isAttack;  // 是否处于攻击状态
     public int atk;
     public float attackOffset;   // 攻击间隔  外部调整
@@ -96,6 +99,9 @@ public class Player : MonoBehaviour
 
     public void Attack()
     {
+        if (!canAttack)
+            return;
+
         if (Input.GetButtonDown("Attack") && timer >= attackOffset && canMove && !isAttack && !isHurt)      // canMove是由其他如对话系统控制  !canMove时就不能攻击  isAttack由攻击本身控制  必须一次攻击结束 让isAttack为true时 才能攻击
         {
             rb.velocity = Vector2.zero;
@@ -134,7 +140,7 @@ public class Player : MonoBehaviour
             return;
 
         curHP -= atk;
-        UIMgr.Instance.UpdateHP(curHP, false);
+        UIMgr.Instance.UpdateHP(curHP + atk, curHP, false);
 
         if (curHP <= 0)
         {
@@ -151,7 +157,36 @@ public class Player : MonoBehaviour
 
     public void Dead()
     {
-        canMove = false;
+        // 这里if条件也许会改  在死亡时可以判断伤害来源如果是Boss1 就触发函数
+        if (SceneLoadMgr.Instance.curScene.name == "Scene2_Main")
+        {
+            SceneLoadMgr.Instance.OnPlayerDeadFromBoss1();
+        }
+        else if (SceneLoadMgr.Instance.curScene.name == "Scene4_Main")
+        {
+            SceneLoadMgr.Instance.OnPlayerDeadFromBoss2();
+        }
+        else
+        {
+            canMove = false;
+
+            UIMgr.Instance.fadePanel.DOFade(1, 2f).OnComplete(() =>
+            {
+                AsyncOperation ao = SceneManager.LoadSceneAsync("Scene3_Main");
+
+                ao.completed += (param) =>
+                {
+                    SceneLoadMgr.Instance.curScene = SceneManager.GetActiveScene();
+                    transform.position = new Vector3(-8f, -49f, 0f);
+                    UIMgr.Instance.fadePanel.DOFade(0, 1f).OnComplete(() =>
+                    {
+                        canMove = true;
+                        curHP += 12;
+                        UIMgr.Instance.UpdateHP(0, curHP, true);
+                    });
+                };
+            });
+        }
     }
 
 
