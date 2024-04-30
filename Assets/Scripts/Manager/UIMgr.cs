@@ -30,6 +30,8 @@ public class UIMgr : MonoBehaviour
     public Sprite questClose;
     public GameObject questComplete;
     [Space(10)]
+    public GameObject potIcon;
+    [Space(10)]
     public Image fadePanel;
 
 
@@ -130,6 +132,8 @@ public class UIMgr : MonoBehaviour
         Player.Instance.canMove = BagMgr.Instance.isOpen;       // 背包开启时 人物不能移动
 
         BagMgr.Instance.isOpen = !BagMgr.Instance.isOpen;       // 设置背包打开状态 bool
+
+        BagMgr.Instance.tip.SetActive(false);                   // 将提示框关闭
     }
 
 
@@ -159,6 +163,8 @@ public class UIMgr : MonoBehaviour
         // 加载QuestLine并实例化    并设置父对象为questPanel
         GameObject questLine = Instantiate(this.questLine, questPanel.transform);
 
+        // QuestLine脚本中添加Quest  方便删除任务时判断UI进行删除
+        questLine.GetComponent<QuestLine>().quest = quest;
         // 修改QuestLine中的背景图
         questLine.transform.Find("Background").GetComponent<Image>().sprite = Resources.Load<Sprite>(quest.NpcQuestBgResPath);
         // 在QuestLineInfos中添加任务所需物品信息
@@ -175,8 +181,23 @@ public class UIMgr : MonoBehaviour
     /// <summary>
     /// 移除任务的UI显示
     /// </summary>
-    public void RemoveQuest(int _index)
+    public void RemoveQuest(Quest quest)
     {
-        Destroy(questPanel.transform.GetChild(_index + 1).gameObject);
+        for (int i = 0; i < questPanel.transform.childCount; i++)
+        {
+            QuestLine questLine = questPanel.transform.GetChild(i).GetComponent<QuestLine>();
+
+            if (questLine != null && questLine.quest.questName == quest.questName)
+                Destroy(questPanel.transform.GetChild(i).gameObject);
+        }
+    }
+
+
+    /// <summary>
+    /// 切换玩家花洒状态
+    /// </summary>
+    public void ChangePottingState()
+    {
+        Player.Instance.isPotting = !Player.Instance.isPotting;
     }
 }

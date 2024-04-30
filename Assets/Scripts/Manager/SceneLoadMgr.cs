@@ -41,6 +41,7 @@ public class SceneLoadMgr : MonoBehaviour
                 // DOFade回去
                 UIMgr.Instance.fadePanel.DOFade(0, 1f);
                 curScene = SceneManager.GetActiveScene();
+                MusicMgr.Instance.ChangeSceneMusic();
             };
         });
     }
@@ -49,7 +50,7 @@ public class SceneLoadMgr : MonoBehaviour
     public void OnPlayerDeadFromBoss1()
     {
         FindObjectOfType<StateMachine>().paramters.target = null;
-        DialogueMgr.Instance.ShowDialogue(E_DialogueNPC.Fox, new string[] { "沉睡吧..." }, InnerFunc);
+        DialogueMgr.Instance.ShowDialogue(E_DialogueNPC.Boss, new string[] { "沉睡吧..." }, InnerFunc);
 
         // Player死亡 Boss对话完毕后调用
         void InnerFunc()
@@ -66,6 +67,7 @@ public class SceneLoadMgr : MonoBehaviour
                     Player.Instance.transform.position = new Vector3(-8f, -49f, 0f);
                     UIMgr.Instance.fadePanel.DOFade(0, 1f).OnComplete(() =>
                     {
+                        MusicMgr.Instance.ChangeSceneMusic();
                         DialogueMgr.Instance.ShowDialogue(E_DialogueNPC.Grandma, new string[]
                         {"......",
                          "你醒了吗。",
@@ -75,7 +77,7 @@ public class SceneLoadMgr : MonoBehaviour
                          "......",
                          "继续上路吧，孩子。"
                         });
-                        Player.Instance.curHP += 12;
+                        Player.Instance.curHP = Player.Instance.maxHP;
                         UIMgr.Instance.UpdateHP(0, Player.Instance.curHP, true);
                     });
                 };
@@ -89,7 +91,7 @@ public class SceneLoadMgr : MonoBehaviour
         FindObjectOfType<StateMachine>().paramters.target = null;
 
         List<string> playerDeadLines = new() { "真是没用……", "你顶多就是条小狗吧。", "迷惘可是会没命的。" };
-        DialogueMgr.Instance.ShowDialogue(E_DialogueNPC.Fox, new string[] { playerDeadLines[Random.Range(0, playerDeadLines.Count)] }, InnerFunc);
+        DialogueMgr.Instance.ShowDialogue(E_DialogueNPC.Boss, new string[] { playerDeadLines[Random.Range(0, playerDeadLines.Count)] }, InnerFunc);
 
         // Player死亡 Boss对话完毕后调用
         void InnerFunc()
@@ -106,8 +108,9 @@ public class SceneLoadMgr : MonoBehaviour
                     Player.Instance.transform.position = new Vector3(-8f, -49f, 0f);
                     UIMgr.Instance.fadePanel.DOFade(0, 1f).OnComplete(() => 
                     {
+                        MusicMgr.Instance.ChangeSceneMusic();
                         Player.Instance.canMove = true;
-                        Player.Instance.curHP += 12;
+                        Player.Instance.curHP  = Player.Instance.maxHP;
                         UIMgr.Instance.UpdateHP(0, Player.Instance.curHP, true);
                     });
                 };

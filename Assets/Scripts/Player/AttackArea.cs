@@ -17,7 +17,7 @@ public class AttackArea : MonoBehaviour
 
         if (collision.CompareTag("Enemy"))
         {
-            collision.GetComponent<Enemy>()?.GetHit(transform);
+            collision.GetComponent<Enemy>()?.GetHurt(transform.parent);
         }
 
         if (collision.CompareTag("Boss"))
@@ -27,7 +27,24 @@ public class AttackArea : MonoBehaviour
 
         if (collision.CompareTag("Obstacle"))
         {
-            Destroy(collision.gameObject);
+            if (collision.gameObject.name == "雕像")
+            {
+                if (Player.Instance.atk >= 3)
+                {
+                    Destroy(collision.gameObject);
+                    GameDataMgr.Instance.SceneData.Scene2_Statue_isDestroy = true;
+                }
+                else
+                {
+                    Player.Instance.BounceSelf();
+                    string[] lines = collision.GetComponent<Scene2_Statue>().onAtkNotEnough;
+                    DialogueMgr.Instance.ShowDialogue(E_DialogueNPC.Tip, lines);
+                }              
+            }
+            else
+            {
+                Destroy(collision.gameObject);
+            }
         }
     }
 }

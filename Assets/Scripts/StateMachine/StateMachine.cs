@@ -107,8 +107,9 @@ public class StateMachine : MonoBehaviour
         {
             ChangeState(E_BossState.Wait);  // 触发死亡前状态的OnExit  使Animator中参数回归默认  让sprite成为默认站立
             paramters.target = null;    // 可以设置死亡动画
-            DialogueMgr.Instance.ShowDialogue(E_DialogueNPC.Fox, new string[] { "做得……", "好……" }, () =>
+            DialogueMgr.Instance.ShowDialogue(E_DialogueNPC.Boss, new string[] { "做得……", "好……" }, () =>
             {
+                MusicMgr.Instance.ChangeSceneMusic();
                 Destroy(GetComponent<Animator>());   // 防止DoFade改透明度时一直切换Spite导致透明度刷新
                 GetComponent<SpriteRenderer>().DOFade(0, 4f).OnComplete(() =>
                 {

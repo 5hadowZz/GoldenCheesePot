@@ -91,3 +91,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slotItem: {fileID: 0}
   slotImage: {fileID: 7240218079606622014}
+  tip: {fileID: 0}
+  tipName: {fileID: 0}
+  tipContent: {fileID: 0}

@@ -5,6 +5,7 @@ using UnityEngine;
 public class Talkable : MonoBehaviour
 {
     public E_DialogueNPC npc;
+    public GameObject ButtonE;
     [TextArea(1, 3)]
     public string[] lines;
     [TextArea(1, 3)]
@@ -19,6 +20,8 @@ public class Talkable : MonoBehaviour
     public string[] questMaxLines;   // 任务接满了时的对话
     [TextArea(1, 3)]
     public string[] questAllCompleteLines;   // 该NPC所有任务都完成时的对话
+    [TextArea(1, 3)]
+    public string[] bagMaxLines;        // 背包满了 不能给予奖励时
 
 
     private bool canTalk;
@@ -29,6 +32,7 @@ public class Talkable : MonoBehaviour
         if (other.CompareTag("Player") && !UIMgr.Instance.questPanel.activeInHierarchy && !DialogueMgr.Instance.dialoguePanel.activeInHierarchy)
         {
             canTalk = true;
+            ButtonE.SetActive(true);
         }
     }
 
@@ -38,6 +42,7 @@ public class Talkable : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             canTalk = false;
+            ButtonE.SetActive(false);
         }
     }
 

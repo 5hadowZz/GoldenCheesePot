@@ -48,3 +48,6 @@ MonoBehaviour:
     itemName: "\u5E7D\u7075\u8349"
     itemPath: "BagItems/Plant_Special_Bag_\u5E7D\u7075\u8349"
     spritePath: "Plants/Plant_Special_Bag_\u5E7D\u7075\u8349"
+    itemContent: "\u8FD9\u662F\u4E00\u4E2A\u5E7D\u7075\u8349\uFF01"
+    canUse: 0
+    isQuestItem: 0

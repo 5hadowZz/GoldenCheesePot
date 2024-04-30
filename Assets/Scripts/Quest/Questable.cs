@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,6 +18,17 @@ public class Questable : MonoBehaviour
 
     private void Start()
     {
+        for (int i = 0; i < QuestMgr.Instance.quests.Count; i++)
+        {
+            for (int j = 0; j < quests.Count; j++)
+            {
+                if (quests[j].questName == QuestMgr.Instance.quests[i].questName)
+                {
+                    quests[j].questStatus = QuestMgr.Instance.quests[i].questStatus;
+                }
+            }
+        }
+
         talkable = GetComponent<Talkable>();
     }
 
@@ -36,9 +48,35 @@ public class Questable : MonoBehaviour
                 {
                     curQuest = quests[i];
                     curQuestIndex = i;
-                    DialogueMgr.Instance.ShowDialogue(talkable.npc, talkable.completeQuestPreLines);
-                    UIMgr.Instance.questComplete.SetActive(true);
+                    // 如果检测到任务是需要物品的  就显示button 点击才提交
+                    if (curQuest.items.Count > 0)
+                    {
+                        DialogueMgr.Instance.ShowDialogue(talkable.npc, talkable.completeQuestPreLines);
+                        UIMgr.Instance.questComplete.SetActive(true);
+                    }
+                    // 如果任务是不需要物品的 说明是对话相关类的任务 就直接完成 给奖励
+                    // 注意：在每个GetReward函数中  自己去添加完成后的RemoveNoItemQuest()函数
+                    //      因为需要自己判断任务完成时机  所以不方便在此处统一执行
+                    else
+                    {
+                        switch (talkable.npc)
+                        {
+                            case E_DialogueNPC.Grandma:
+                                GetComponent<QuestReward_Grandma>().GetReward(curQuestIndex);
+                                break;
+
+                            case E_DialogueNPC.Bear:
+                                GetComponent<QuestReward_Bear>().GetReward(curQuestIndex);
+                                break;
+
+                            case E_DialogueNPC.Fox:
+                                GetComponent<QuestReward_Fox>().GetReward(curQuestIndex);
+                                break;
+                        }
+                    }
                 }
+
+                // 接了任务 但检测到没完成 就显示没完成任务的对话
                 else
                 {
                     DialogueMgr.Instance.ShowDialogue(talkable.npc, talkable.notCompleteQuestLines);
@@ -52,7 +90,6 @@ public class Questable : MonoBehaviour
                 {
                     DelegateQuest(quests[i]);
                 });
-
 
                 break;
             }
@@ -73,6 +110,11 @@ public class Questable : MonoBehaviour
     /// <returns></returns>
     private bool CheckQuestCompleted(Quest quest)
     {
+        if (quest.items.Count == 0)
+        {
+            return true;
+        }
+
         Dictionary<string, int> itemDic = new Dictionary<string, int>();
 
         // 遍历背包 往tempDic中添加东西   最后检测dic中物品是否>=quest中所需物品
@@ -122,19 +164,29 @@ public class Questable : MonoBehaviour
     /// </summary>
     public void DelegateQuest(Quest quest)
     {
-        if (QuestMgr.Instance.quests.Count >= 3)
+        int acceptedQuestNum = 0;
+        for (int i = 0; i < QuestMgr.Instance.quests.Count; i++)
         {
-            // 弹出任务已达上限对话框
-            DialogueMgr.Instance.ShowDialogue(talkable.npc, talkable.questMaxLines);
-            return;
+            if (QuestMgr.Instance.quests[i].questStatus == E_QuestStatus.Accepted)
+            {
+                ++acceptedQuestNum;
+                if (acceptedQuestNum >= 3)
+                {
+                    // 弹出任务已达上限对话框
+                    DialogueMgr.Instance.ShowDialogue(talkable.npc, talkable.questMaxLines);
+                    return;
+                }
+            }
         }
-
 
         quest.questStatus = E_QuestStatus.Accepted;     // 改变任务状态
         QuestMgr.Instance.quests.Add(quest);             // 添加到全局任务字典中
 
         // 任务面板添加一项任务的UI显示
-        UIMgr.Instance.AddQuest(quest);
+        if (quest.items != null && quest.items.Count > 0)
+        {
+            UIMgr.Instance.AddQuest(quest);
+        }
     }
 
 
@@ -147,14 +199,41 @@ public class Questable : MonoBehaviour
         curQuest.questStatus = E_QuestStatus.Completed;
 
         // UI中移除相应任务显示
-        int index = QuestMgr.Instance.quests.IndexOf(curQuest);
-        UIMgr.Instance.RemoveQuest(index);
+        UIMgr.Instance.RemoveQuest(curQuest);
 
-        // 任务管理器中移除任务
-        QuestMgr.Instance.quests.Remove(curQuest);
+        // 任务管理器中改变任务状态
+        for (int i = 0; i < QuestMgr.Instance.quests.Count; i++)
+        {
+            if (QuestMgr.Instance.quests[i].questName == curQuest.questName)
+            {
+                QuestMgr.Instance.quests[i].questStatus = E_QuestStatus.Completed;
+            }
+        }
 
         // 背包中移除物品
         RemoveItems();
+
+        // 置空目前可以提交的任务
+        curQuest = null;
+    }
+
+
+    /// <summary>
+    /// 对话类任务正常完成后  更改状态
+    /// </summary>
+    public void RemoveNoItemQuest()
+    {
+        // NPC的该任务状态改为完成
+        curQuest.questStatus = E_QuestStatus.Completed;
+
+        // 任务管理器中改变任务状态
+        for (int m = 0; m < QuestMgr.Instance.quests.Count; m++)
+        {
+            if (QuestMgr.Instance.quests[m].questName == curQuest.questName)
+            {
+                QuestMgr.Instance.quests[m].questStatus = E_QuestStatus.Completed;
+            }
+        }
 
         // 置空目前可以提交的任务
         curQuest = null;

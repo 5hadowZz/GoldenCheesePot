@@ -19,7 +19,7 @@ public class QuestMgr : MonoBehaviour
 
     private void OnEnable()
     {
-        zeroQuestPanel.SetActive(quests.Count == 0);
+        zeroQuestPanel.SetActive(transform.childCount == 1);
     }
 
 

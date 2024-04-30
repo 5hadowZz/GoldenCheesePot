@@ -17,13 +17,16 @@ public class QuestComplete : MonoBehaviour
 
         // 完成任务的按钮消失
         UIMgr.Instance.questComplete.SetActive(false);
+
         // 显示任务完成后的对话
         DialogueMgr.Instance.dialoguePanel.SetActive(false);
-        DialogueMgr.Instance.ShowDialogue(talkable.npc, talkable.completeQuestLines);
-        // 删除任务的Mgr中存储、UI显示、背包中的物品
-        questable.RemoveQuest();
-        // 根据NPC和任务给予奖励
-        GetReward(talkable.npc);
+        DialogueMgr.Instance.ShowDialogue(talkable.npc, talkable.completeQuestLines, () =>
+        {
+            // 删除任务的Mgr中存储、UI显示、背包中的物品
+            questable.RemoveQuest();
+            // 根据NPC和任务给予奖励
+            GetReward(talkable.npc);
+        });
     }
 
 

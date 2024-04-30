@@ -27,8 +27,7 @@ public class Test_FirstEnterBoss : MonoBehaviour
         // 如果是第一次进 才显示对话 并设置为已经进入过
         if (GameDataMgr.Instance.SceneData.isFirstMeetBoss1)
         {
-            //GameObject boss = Instantiate(bossObj);
-            //boss.transform.position = new Vector3(-5.29f, -32.27f, 0f);
+            MusicMgr.Instance.SetNullMusic();
 
             Player.Instance.canMove = false;
             GameDataMgr.Instance.SceneData.isFirstMeetBoss1 = false;
@@ -48,6 +47,8 @@ public class Test_FirstEnterBoss : MonoBehaviour
 
     public void OnDialogueOver()
     {
+        MusicMgr.Instance.ChangeBattleMusic();
+
         cam.Follow = Player.Instance.gameObject.transform;
         Player.Instance.canMove = true;
         FindObjectOfType<StateMachine>().paramters.target = Player.Instance.transform;

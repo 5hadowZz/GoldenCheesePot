@@ -8,7 +8,12 @@ public enum E_DialogueNPC
 {
     Grandma,
     Bear,
-    Fox
+    Fox,
+    Boss,
+    Player,
+    Tip,
+    Note,
+    Caterpillar
 }
 
 
@@ -32,6 +37,11 @@ public class DialogueMgr : MonoBehaviour
     public GameObject grandmaPanel;
     public GameObject bearPanel;
     public GameObject foxPanel;
+    public GameObject bossPanel;
+    public GameObject playerPanel;
+    public GameObject tipPanel;
+    public GameObject notePanel;
+    public GameObject caterpillarPanel;
 
     [HideInInspector]
     public GameObject dialogueNPC;
@@ -104,6 +114,10 @@ public class DialogueMgr : MonoBehaviour
 
         this.callBack = callBack;
 
+        dialoguePanel.SetActive(true);
+        OpenCloseNpcPanel(npc, true);              // 打开指定的NPC对话面板
+
+        dialogueText = curDialoguePanel.GetComponentInChildren<Text>();
         dialogueText.text = "";
 
         dialogueLines = _lines;
@@ -114,8 +128,6 @@ public class DialogueMgr : MonoBehaviour
         isScrolling = true;
         dialogueText.DOText(dialogueLines[currentLine], dialogueLines[currentLine].Length / dialogueSpeed).OnComplete(
             () => { isScrolling = false; });
-        dialoguePanel.SetActive(true);
-        OpenCloseNpcPanel(npc, true);              // 打开指定的NPC对话面板
 
         Player.Instance.canMove = false;     // 让主角不能移动
     }
@@ -154,6 +166,26 @@ public class DialogueMgr : MonoBehaviour
 
             case E_DialogueNPC.Fox:
                 curDialoguePanel = foxPanel;
+                break;
+
+            case E_DialogueNPC.Boss:
+                curDialoguePanel = bossPanel;
+                break;
+
+            case E_DialogueNPC.Player: 
+                curDialoguePanel = playerPanel;
+                break;
+
+            case E_DialogueNPC.Tip:
+                curDialoguePanel = tipPanel;
+                break;
+
+            case E_DialogueNPC.Note:
+                curDialoguePanel = notePanel;
+                break;
+
+            case E_DialogueNPC.Caterpillar:
+                curDialoguePanel = caterpillarPanel;
                 break;
         }
 

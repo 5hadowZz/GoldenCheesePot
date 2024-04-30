@@ -70,6 +70,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6056270785371797452}
+  - component: {fileID: 4843415960453815408}
   m_Layer: 5
   m_Name: QuestLine
   m_TagString: Untagged
@@ -99,6 +100,18 @@ RectTransform:
   m_AnchoredPosition: {x: -346, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &4843415960453815408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6056270785371797455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79d7c7e408831c64fa4ad192b2d7dc73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6056270785914612232
 GameObject:
   m_ObjectHideFlags: 0

@@ -46,5 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   info:
     itemName: "\u70C8\u706B\u8393\u679C"
-    spritePath: "Plants/Plant_Normal_Bag_\u70C8\u706B\u8393\u679C"
     itemPath: "BagItems/Plant_Normal_Bag_\u70C8\u706B\u8393\u679C"
+    spritePath: "Plants/Plant_Normal_Bag_\u70C8\u706B\u8393\u679C"
+    itemContent: "\u8FD9\u662F\u4E00\u4E2A\u70C8\u706B\u8393\u679C\u3002"
+    canUse: 0
+    isQuestItem: 0

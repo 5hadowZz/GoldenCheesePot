@@ -36,7 +36,7 @@ public class Test_FirstEnterBoss2 : MonoBehaviour
             cam.Follow = boss2.transform;
             //director.Play();
 
-
+            MusicMgr.Instance.SetNullMusic();
             Player.Instance.canMove = false;
             if (GameDataMgr.Instance.SceneData.isFirstMeetBoss2)
             {
@@ -56,6 +56,8 @@ public class Test_FirstEnterBoss2 : MonoBehaviour
 
     public void OnDialogueOver()
     {
+        MusicMgr.Instance.ChangeBattleMusic();
+
         cam.Follow = Player.Instance.gameObject.transform;
         Player.Instance.canMove = true;
         FindObjectOfType<StateMachine>().paramters.target = Player.Instance.transform;

@@ -17,11 +17,12 @@ public class Player : MonoBehaviour
     private float idleX, idleY;
     private float timer;    // 攻击间隔计时器
     private bool isHurt = false;
-    private int curSpeed;
+
 
     [Header("移动相关")]
     public bool canMove = true;  // 是否可以移动  攻击、对话时等等使用
     public int maxSpeed;
+    public int curSpeed;
     [Header("攻击相关")]
     public bool canAttack;
     private bool isAttack;  // 是否处于攻击状态
@@ -34,12 +35,28 @@ public class Player : MonoBehaviour
     public int maxPower = 5;
     public int curPower;
 
+    [Header("花洒")]
+    public bool isPotting;
+    public GameObject pot;
+    private SpriteRenderer potSprite;
+    private Animator potAnimator;
+    [Header("WaterDir")]
+    public GameObject waterRight;
+    public GameObject waterLeft;
+    public GameObject waterUp;
+    public GameObject waterDown;
+    [Header("WaterTime")]
+    public float waterOffset;
+    private float waterTimer;
+
 
     private void Awake()
     {
         instance = this;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        potSprite = pot.GetComponent<SpriteRenderer>();
+        potAnimator = pot.GetComponent<Animator>();
     }
 
 
@@ -47,6 +64,8 @@ public class Player : MonoBehaviour
     {
         ChangeAnimation();
         Attack();
+        ChangePottingDir();
+        CheckWater();
     }
 
 
@@ -99,10 +118,10 @@ public class Player : MonoBehaviour
 
     public void Attack()
     {
-        if (!canAttack)
+        if (!canAttack || isPotting)
             return;
 
-        if (Input.GetButtonDown("Attack") && timer >= attackOffset && canMove && !isAttack && !isHurt)      // canMove是由其他如对话系统控制  !canMove时就不能攻击  isAttack由攻击本身控制  必须一次攻击结束 让isAttack为true时 才能攻击
+        if ((Input.GetButtonDown("Attack") || Input.GetMouseButtonDown(0)) && timer >= attackOffset && canMove && !isAttack && !isHurt)      // canMove是由其他如对话系统控制  !canMove时就不能攻击  isAttack由攻击本身控制  必须一次攻击结束 让isAttack为true时 才能攻击
         {
             rb.velocity = Vector2.zero;
             //canMove = false;
@@ -155,6 +174,17 @@ public class Player : MonoBehaviour
     }
 
 
+    public void UpdateHP(int changedHP, bool isAddHP)
+    {
+        if (curHP + changedHP >= maxHP)
+            curHP = maxHP;
+        else
+            curHP += changedHP;
+
+        UIMgr.Instance.UpdateHP(curHP - changedHP, curHP, isAddHP);
+    }
+
+
     public void Dead()
     {
         // 这里if条件也许会改  在死亡时可以判断伤害来源如果是Boss1 就触发函数
@@ -180,8 +210,9 @@ public class Player : MonoBehaviour
                     transform.position = new Vector3(-8f, -49f, 0f);
                     UIMgr.Instance.fadePanel.DOFade(0, 1f).OnComplete(() =>
                     {
+                        MusicMgr.Instance.ChangeSceneMusic();
                         canMove = true;
-                        curHP += 12;
+                        curHP = maxHP;
                         UIMgr.Instance.UpdateHP(0, curHP, true);
                     });
                 };
@@ -217,5 +248,86 @@ public class Player : MonoBehaviour
     {
         animator.SetFloat("SpeedX", idleX);
         animator.SetFloat("SpeedY", idleY);
+    }
+
+
+    /// <summary>
+    /// 花洒状态下的花洒Obj的方向切换
+    /// </summary>
+    private void ChangePottingDir()
+    {
+        if (!isPotting)
+        {
+            pot.SetActive(false);
+        }
+
+
+        if (isPotting)
+        {
+            if (idleX > 0)
+                potSprite.flipX = false;
+            else if (idleX < 0)
+                potSprite.flipX = true;
+
+            if (idleY > 0 && idleX == 0)
+                pot.SetActive(false);
+            else
+                pot.SetActive(true);
+        }
+    }
+
+
+    /// <summary>
+    /// 花洒状态下浇水的处理
+    /// </summary>
+    public void CheckWater()
+    {
+        if (waterTimer > 0)
+            waterTimer -= Time.deltaTime;
+
+        if (!isPotting)
+            return;
+
+        if (Input.GetMouseButtonDown(0) && waterTimer <= 0)
+        {
+            canMove = false;
+            potAnimator.SetTrigger("Shaking");
+
+            // 右浇
+            if (animator.GetFloat("SpeedX") > 0)
+            {
+                waterRight.SetActive(true);
+            }
+            // 左
+            else if (animator.GetFloat("SpeedX") < 0)
+            {
+                waterLeft.SetActive(true);
+            }
+            else
+            {
+                // 前
+                if (animator.GetFloat("SpeedY") > 0)
+                {
+                    waterUp.SetActive(true);
+                }
+                // 后
+                else
+                {
+                    waterDown.SetActive(true);
+                }
+            }
+
+            waterTimer = waterOffset;
+        }
+    }
+
+
+    /// <summary>
+    /// 反弹自身
+    /// </summary>
+    public void BounceSelf()
+    {
+        rb.velocity = animator.GetFloat("SpeedX") == 0f ?
+            new Vector2(rb.velocity.x, -idleY * attackMove * 1.5f) * 0.0625f : new Vector2(-idleX * attackMove * 1.5f, rb.velocity.y) * 0.0625f;
     }
 }

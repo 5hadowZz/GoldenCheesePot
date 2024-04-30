@@ -4,10 +4,14 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Slot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
+public class Slot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     public Item slotItem;
     public Image slotImage;
+
+    private GameObject tip;
+    private Text tipName;
+    private Text tipContent;
 
     private Vector3 originalSlotPos;
 
@@ -15,6 +19,14 @@ public class Slot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
     private void OnEnable()
     {
         slotImage.raycastTarget = true;
+    }
+
+
+    private void Start()
+    {
+        tip = BagMgr.Instance.tip;
+        tipName = BagMgr.Instance.tip.transform.GetChild(0).GetComponent<Text>();
+        tipContent = BagMgr.Instance.tip.transform.GetChild(1).GetComponent<Text>();
     }
 
 
@@ -65,10 +77,14 @@ public class Slot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
 
             ExchangeIndex(BagMgr.Instance.slots.IndexOf(gameObject), BagMgr.Instance.slots.IndexOf(target));
         }
-        // 如果下方物体为垃圾桶 删除物体 并弹回Slot
+        // 如果下方物体为垃圾桶 删除非任务Item 并弹回Slot
         else if (eventData.pointerCurrentRaycast.gameObject.name.StartsWith("Ash-bin"))
         {
-            DeleteItem();
+            if (!slotItem.info.isQuestItem)
+            {
+                DeleteItem();
+            }
+
             transform.position = originalSlotPos;
         }
         // 否则 弹回
@@ -112,5 +128,54 @@ public class Slot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
     private void DeleteItem()
     {
         BagMgr.Instance.AddToBag(null, BagMgr.Instance.slots.IndexOf(gameObject));
+    }
+
+
+    /// <summary>
+    /// 鼠标进入时 显示物体信息
+    /// </summary>
+    /// <param name="eventData"></param>
+    /// <exception cref="System.NotImplementedException"></exception>
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (slotItem != null)
+        {
+            tipName.text = slotItem.info.itemName;
+            tipContent.text = slotItem.info.itemContent;
+            tip.transform.position = transform.position + new Vector3(154, -21, 0);
+            tip.SetActive(true);
+        }
+    }
+
+
+    /// <summary>
+    /// 鼠标退出时 消失物体信息
+    /// </summary>
+    /// <param name="eventData"></param>
+    /// <exception cref="System.NotImplementedException"></exception>
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (slotItem != null)
+        {
+            
+            tip.SetActive(false);
+        }
+    }
+
+
+    /// <summary>
+    /// 点击物体 使用
+    /// </summary>
+    /// <param name="eventData"></param>
+    /// <exception cref="System.NotImplementedException"></exception>
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (slotItem == null || !slotItem.info.canUse)
+            return;
+
+        tip.SetActive(false);
+        slotItem.UseItem();
+        DeleteItem();
+        transform.position = originalSlotPos;
     }
 }
