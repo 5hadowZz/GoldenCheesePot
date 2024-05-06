@@ -7,7 +7,7 @@ public class Caterpillar : MonoBehaviour
 {
     public GameObject buttonE;
     [TextArea]
-    public string[] lines;
+    public string[] randomLines;
     [TextArea]
     public string[] checkHaveSandwich;
     public Sprite after;
@@ -27,7 +27,7 @@ public class Caterpillar : MonoBehaviour
     {
         if (canInteract && Input.GetKeyDown(KeyCode.E))
         {
-            DialogueMgr.Instance.ShowDialogue(E_DialogueNPC.Caterpillar, lines, CheckSandwich);
+            DialogueMgr.Instance.ShowDialogue(E_DialogueNPC.Caterpillar, new string[] { randomLines[Random.Range(0, randomLines.Length)] }, CheckSandwich);
         }
     }
 

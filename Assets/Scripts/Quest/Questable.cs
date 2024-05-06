@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -39,10 +38,17 @@ public class Questable : MonoBehaviour
     /// </summary>
     public void CheckQuest()
     {
+        if (quests.Count == 0)
+        {
+            talkable.RandomChat();
+            return;
+        }
+
+
         for (int i = 0; i < quests.Count; i++)
         {
             if (quests[i].questStatus == E_QuestStatus.Accepted)
-            {
+            {              
                 // 检测到accepted的任务已完成 显示一个button 点击之后执行完成任务的逻辑
                 if (CheckQuestCompleted(quests[i]))
                 {
@@ -51,7 +57,7 @@ public class Questable : MonoBehaviour
                     // 如果检测到任务是需要物品的  就显示button 点击才提交
                     if (curQuest.items.Count > 0)
                     {
-                        DialogueMgr.Instance.ShowDialogue(talkable.npc, talkable.completeQuestPreLines);
+                        talkable.RandomChat();
                         UIMgr.Instance.questComplete.SetActive(true);
                     }
                     // 如果任务是不需要物品的 说明是对话相关类的任务 就直接完成 给奖励
@@ -76,28 +82,53 @@ public class Questable : MonoBehaviour
                     }
                 }
 
-                // 接了任务 但检测到没完成 就显示没完成任务的对话
+                // 接了任务 但检测到没完成 就闲聊
                 else
                 {
-                    DialogueMgr.Instance.ShowDialogue(talkable.npc, talkable.notCompleteQuestLines);
+                    talkable.RandomChat();
                 }
                 break;
             }
 
             else if (quests[i].questStatus == E_QuestStatus.Waiting)
             {
-                DialogueMgr.Instance.ShowDialogue(talkable.npc, talkable.delegateQuestLines, () =>
+                if (i == 0)
                 {
-                    DelegateQuest(quests[i]);
-                });
+                    DialogueMgr.Instance.ShowDialogue(talkable.npc, talkable.delegateQuestLines_First, () =>
+                    {
+                        DelegateQuest(quests[i]);
+                    });
+                }
+                else if (i == 1)
+                {
+                    DialogueMgr.Instance.ShowDialogue(talkable.npc, talkable.delegateQuestLines_Second, () =>
+                    {
+                        DelegateQuest(quests[i]);
+                    });
+                }
+                else if (i == 2)
+                {
+                    DialogueMgr.Instance.ShowDialogue(talkable.npc, talkable.delegateQuestLines_Third, () =>
+                    {
+                        DelegateQuest(quests[i]);
+                    });
+                }
+                else if (i == 3)
+                {
+                    DialogueMgr.Instance.ShowDialogue(talkable.npc, talkable.delegateQuestLines_Fourth, () =>
+                    {
+                        DelegateQuest(quests[i]);
+                    });
+                }
 
                 break;
             }
 
             else if (i == quests.Count - 1)
             {
-                // 执行所有任务完成后该有的事
-                DialogueMgr.Instance.ShowDialogue(talkable.npc, talkable.questAllCompleteLines);
+                // 所有任务完成的话  就闲聊
+                talkable.RandomChat();
+                break;
             }
         }
     }
@@ -164,20 +195,20 @@ public class Questable : MonoBehaviour
     /// </summary>
     public void DelegateQuest(Quest quest)
     {
-        int acceptedQuestNum = 0;
-        for (int i = 0; i < QuestMgr.Instance.quests.Count; i++)
-        {
-            if (QuestMgr.Instance.quests[i].questStatus == E_QuestStatus.Accepted)
-            {
-                ++acceptedQuestNum;
-                if (acceptedQuestNum >= 3)
-                {
-                    // 弹出任务已达上限对话框
-                    DialogueMgr.Instance.ShowDialogue(talkable.npc, talkable.questMaxLines);
-                    return;
-                }
-            }
-        }
+        //int acceptedQuestNum = 0;
+        //for (int i = 0; i < QuestMgr.Instance.quests.Count; i++)
+        //{
+        //    if (QuestMgr.Instance.quests[i].questStatus == E_QuestStatus.Accepted)
+        //    {
+        //        ++acceptedQuestNum;
+        //        if (acceptedQuestNum >= 3)
+        //        {
+        //            // 弹出任务已达上限对话框
+        //            DialogueMgr.Instance.ShowDialogue(talkable.npc, talkable.questMaxLines);
+        //            return;
+        //        }
+        //    }
+        //}
 
         quest.questStatus = E_QuestStatus.Accepted;     // 改变任务状态
         QuestMgr.Instance.quests.Add(quest);             // 添加到全局任务字典中

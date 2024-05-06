@@ -4,17 +4,23 @@ using UnityEngine;
 
 public class QuestReward_Grandma : MonoBehaviour
 {
+    [TextArea(1, 3)]
+    public string[] lines1;
+    [TextArea(1, 3)]
+    public string[] lines2;
+    [TextArea(1, 3)]
+    public string[] lines3;
+    [TextArea(1, 3)]
+    public string[] lines4;
+
+
     public void GetReward(int questIndex)
     {
         switch (questIndex)
         {
             // 解锁花洒
             case 0:
-                DialogueMgr.Instance.ShowDialogue(E_DialogueNPC.Grandma, new string[] 
-                {
-                    "孩子，这花洒你拿去吧，兴许路上会有些用处。\n\n" +
-                    "[获得花洒]" 
-                }, () =>
+                DialogueMgr.Instance.ShowDialogue(E_DialogueNPC.Grandma, lines1, () =>
                 {
                     UIMgr.Instance.potIcon.SetActive(true);
                 });
@@ -22,11 +28,7 @@ public class QuestReward_Grandma : MonoBehaviour
 
             // 奖励热辣煎蛋
             case 1:
-                DialogueMgr.Instance.ShowDialogue(E_DialogueNPC.Grandma, new string[]
-                {
-                    "真棒，奖励你一个煎蛋。\n\n" +
-                    "[获得热辣煎蛋]"
-                }, () =>
+                DialogueMgr.Instance.ShowDialogue(E_DialogueNPC.Grandma, lines2, () =>
                 {
                     Item item = Resources.Load<GameObject>("BagItems/Shop_Bag_热辣煎蛋").GetComponent<Item>();
                     BagMgr.Instance.AddToBag(item);
@@ -36,11 +38,7 @@ public class QuestReward_Grandma : MonoBehaviour
 
             // 强化武器
             case 2:
-                DialogueMgr.Instance.ShowDialogue(E_DialogueNPC.Grandma, new string[]
-                {
-                    "真棒，奖励你!。\n\n" +
-                    "[攻击力提升]"
-                }, () =>
+                DialogueMgr.Instance.ShowDialogue(E_DialogueNPC.Grandma, lines3, () =>
                 {
                     Player.Instance.atk += 2;
                 });
@@ -49,7 +47,10 @@ public class QuestReward_Grandma : MonoBehaviour
 
             // 结局动画
             case 3:
+                DialogueMgr.Instance.ShowDialogue(E_DialogueNPC.Grandma, lines4, () =>
+                {
 
+                });
                 break;
         }
     }

@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class QuestReward_Fox : MonoBehaviour
 {
+    [TextArea(1, 3)]
+    public string[] lines1;
+    [TextArea(1, 3)]
+    public string[] lines2;
+
+
     public void GetReward(int questIndex)
     {
         switch (questIndex)
         {
             // 移速提升
             case 0:
-                DialogueMgr.Instance.ShowDialogue(E_DialogueNPC.Fox, new string[]
-                {
-                    "噢！是它！太感谢你了！",
-                    "....",
-                    "过来，我教你一招...\n\n\n" +
-                    "[移速提升]"
-                }, () =>
+                DialogueMgr.Instance.ShowDialogue(E_DialogueNPC.Fox, lines1, () =>
 
                 {
                     Player.Instance.maxSpeed += 8;
@@ -40,13 +40,7 @@ public class QuestReward_Fox : MonoBehaviour
                 }
                 else
                 {
-                    DialogueMgr.Instance.ShowDialogue(E_DialogueNPC.Fox, new string[]
-                    {
-                        "噢，对了。",
-                        "这有封信，有空的话，麻烦把它放进不远处的信箱里吧。\n\n" +
-                        "[获得信件]"
-                    }, () =>
-
+                    DialogueMgr.Instance.ShowDialogue(E_DialogueNPC.Fox, lines2, () =>
                     {
                         Item item = Resources.Load<GameObject>("BagItems/Quest_Bag_信件").GetComponent<Item>();
                         BagMgr.Instance.AddToBag(item);

@@ -7,22 +7,15 @@ public class Talkable : MonoBehaviour
     public E_DialogueNPC npc;
     public GameObject ButtonE;
     [TextArea(1, 3)]
-    public string[] lines;
+    public string[] randomLines;            // 随机闲聊
     [TextArea(1, 3)]
-    public string[] delegateQuestLines;     // 发派任务时的对话
+    public string[] delegateQuestLines_First;     // 发派第1个任务时的对话
     [TextArea(1, 3)]
-    public string[] notCompleteQuestLines;   // 未完成任务时的对话
+    public string[] delegateQuestLines_Second;     // 发派第2个任务时的对话
     [TextArea(1, 3)]
-    public string[] completeQuestPreLines;   // 完成任务时 点击完成任务按钮前 的对话
+    public string[] delegateQuestLines_Third;     // 发派第3个任务时的对话
     [TextArea(1, 3)]
-    public string[] completeQuestLines;     // 完成任务 点击按钮后 的对话
-    [TextArea(1, 3)]
-    public string[] questMaxLines;   // 任务接满了时的对话
-    [TextArea(1, 3)]
-    public string[] questAllCompleteLines;   // 该NPC所有任务都完成时的对话
-    [TextArea(1, 3)]
-    public string[] bagMaxLines;        // 背包满了 不能给予奖励时
-
+    public string[] delegateQuestLines_Fourth;     // 发派第4个任务时的对话
 
     private bool canTalk;
 
@@ -51,8 +44,19 @@ public class Talkable : MonoBehaviour
     {
         if (canTalk && Input.GetKeyDown(KeyCode.E))
         {
-            DialogueMgr.Instance.ShowDialogue(npc, lines, () => { GetComponent<Questable>().CheckQuest(); });
+            GetComponent<Questable>().CheckQuest();
+
             DialogueMgr.Instance.dialogueNPC = gameObject;
         }
+    }
+
+
+    /// <summary>
+    /// 弹出闲聊对话
+    /// </summary>
+    public void RandomChat()
+    {
+        string lines = randomLines[Random.Range(0, randomLines.Length)];
+        DialogueMgr.Instance.ShowDialogue(npc, new string[] { lines });
     }
 }

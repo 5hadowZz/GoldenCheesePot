@@ -47,6 +47,7 @@ public class Smile : Enemy
     }
 
 
+
     private void OnDrawGizmosSelected()
     {
         // 巡逻范围
@@ -63,6 +64,12 @@ public class Smile : Enemy
 
     private void Start()
     {
+        if (!GameDataMgr.Instance.SceneData.isBeKilledByBoss1)
+        {
+            Destroy(gameObject);
+        }
+
+
         curHP = maxHP;
         patrolWaitTimer = patrolWaitTime;
         chaseWaitTimer = chaseWaitTime;

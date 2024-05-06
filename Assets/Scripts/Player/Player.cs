@@ -187,12 +187,13 @@ public class Player : MonoBehaviour
 
     public void Dead()
     {
-        // 这里if条件也许会改  在死亡时可以判断伤害来源如果是Boss1 就触发函数
-        if (SceneLoadMgr.Instance.curScene.name == "Scene2_Main")
+        // 在场景2  并且没有被boss1击杀过  那么死亡时  就触发被boss1击杀的逻辑  并且改布尔 被boss1击杀 为true
+        if (SceneLoadMgr.Instance.curScene.name == "Scene2_Main" && !GameDataMgr.Instance.SceneData.isBeKilledByBoss1)
         {
             SceneLoadMgr.Instance.OnPlayerDeadFromBoss1();
         }
-        else if (SceneLoadMgr.Instance.curScene.name == "Scene4_Main")
+        // 在场景4 并且进入区域触发了遇见boss2  才算作这个场景的死亡来源是boss2   死亡时才会触发被boss2杀死的逻辑
+        else if (SceneLoadMgr.Instance.curScene.name == "Scene4_Main" && FindObjectOfType<Test_FirstEnterBoss2>().curSceneMeet)
         {
             SceneLoadMgr.Instance.OnPlayerDeadFromBoss2();
         }

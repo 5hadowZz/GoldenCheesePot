@@ -49,6 +49,8 @@ public class SceneLoadMgr : MonoBehaviour
 
     public void OnPlayerDeadFromBoss1()
     {
+        GameDataMgr.Instance.SceneData.isBeKilledByBoss1 = true;
+
         FindObjectOfType<StateMachine>().paramters.target = null;
         DialogueMgr.Instance.ShowDialogue(E_DialogueNPC.Boss, new string[] { "沉睡吧..." }, InnerFunc);
 
@@ -68,15 +70,11 @@ public class SceneLoadMgr : MonoBehaviour
                     UIMgr.Instance.fadePanel.DOFade(0, 1f).OnComplete(() =>
                     {
                         MusicMgr.Instance.ChangeSceneMusic();
-                        DialogueMgr.Instance.ShowDialogue(E_DialogueNPC.Grandma, new string[]
-                        {"......",
-                         "你醒了吗。",
-                         "我在野外发现你...",
-                         "那时你已经倒下了...",
-                         "嗯...不用说，我知道发生了什么。",
-                         "......",
-                         "继续上路吧，孩子。"
-                        });
+                        GameObject grandma = FindObjectOfType<QuestReward_Grandma>().gameObject;
+                        Questable questable = grandma.GetComponent<Questable>();
+
+                        questable.CheckQuest();
+
                         Player.Instance.curHP = Player.Instance.maxHP;
                         UIMgr.Instance.UpdateHP(0, Player.Instance.curHP, true);
                     });
@@ -106,11 +104,11 @@ public class SceneLoadMgr : MonoBehaviour
                 {
                     curScene = SceneManager.GetActiveScene();
                     Player.Instance.transform.position = new Vector3(-8f, -49f, 0f);
-                    UIMgr.Instance.fadePanel.DOFade(0, 1f).OnComplete(() => 
+                    UIMgr.Instance.fadePanel.DOFade(0, 1f).OnComplete(() =>
                     {
                         MusicMgr.Instance.ChangeSceneMusic();
                         Player.Instance.canMove = true;
-                        Player.Instance.curHP  = Player.Instance.maxHP;
+                        Player.Instance.curHP = Player.Instance.maxHP;
                         UIMgr.Instance.UpdateHP(0, Player.Instance.curHP, true);
                     });
                 };

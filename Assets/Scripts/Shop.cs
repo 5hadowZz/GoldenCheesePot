@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Shop : MonoBehaviour
 {
+    [Header("买东西后的话")]
+    public string[] randomLines;
     [Header("小熊面包材料")]
     public Item[] items_1;
     public int[] nums_1;
@@ -52,8 +54,8 @@ public class Shop : MonoBehaviour
                         BagMgr.Instance.DeleteItem(items_1[i], nums_1[i]);
                     }
                     BagMgr.Instance.AddToBag(shopItem1);
-                    DialogueMgr.Instance.dialoguePanel.SetActive(false);
-                    DialogueMgr.Instance.ShowDialogue(E_DialogueNPC.Bear, new string[] { "给，拿去，特制的小熊面包。" });
+
+                    RandomChat();
                 }
                 break;
 
@@ -73,8 +75,8 @@ public class Shop : MonoBehaviour
                         BagMgr.Instance.DeleteItem(items_2[i], nums_2[i]);
                     }
                     BagMgr.Instance.AddToBag(shopItem2);
-                    DialogueMgr.Instance.dialoguePanel.SetActive(false);
-                    DialogueMgr.Instance.ShowDialogue(E_DialogueNPC.Bear, new string[] { "给，拿去，特制的热辣煎蛋。" });
+
+                    RandomChat();
                 }
                 break;
 
@@ -94,8 +96,8 @@ public class Shop : MonoBehaviour
                         BagMgr.Instance.DeleteItem(items_3[i], nums_3[i]);
                     }
                     BagMgr.Instance.AddToBag(shopItem3);
-                    DialogueMgr.Instance.dialoguePanel.SetActive(false);
-                    DialogueMgr.Instance.ShowDialogue(E_DialogueNPC.Bear, new string[] { "给，拿去，特制的灵魂三明治。" });
+
+                    RandomChat();
                 }
                 break;
 
@@ -115,10 +117,17 @@ public class Shop : MonoBehaviour
                         BagMgr.Instance.DeleteItem(items_4[i], nums_4[i]);
                     }
                     BagMgr.Instance.AddToBag(shopItem4);
-                    DialogueMgr.Instance.dialoguePanel.SetActive(false);
-                    DialogueMgr.Instance.ShowDialogue(E_DialogueNPC.Bear, new string[] { "给，拿去，特制的豌豆饼。" });
+                    
+                    RandomChat();
                 }
                 break;
         }
+    }
+
+
+    private void RandomChat()
+    {
+        DialogueMgr.Instance.dialoguePanel.SetActive(false);
+        DialogueMgr.Instance.ShowDialogue(E_DialogueNPC.Bear, new string[] { randomLines[Random.Range(0, randomLines.Length)] });
     }
 }

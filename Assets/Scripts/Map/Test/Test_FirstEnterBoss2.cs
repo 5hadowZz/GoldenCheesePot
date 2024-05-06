@@ -16,7 +16,7 @@ public class Test_FirstEnterBoss2 : MonoBehaviour
     public GameObject boss2;
     public CinemachineVirtualCamera cam;
     //public PlayableDirector director;
-    private bool curSceneMeet;
+    public bool curSceneMeet;
 
 
     private void Awake()

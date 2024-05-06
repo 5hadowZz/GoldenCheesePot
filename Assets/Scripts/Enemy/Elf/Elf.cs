@@ -52,6 +52,11 @@ public class Elf : Enemy
 
     private void Start()
     {
+        if (!GameDataMgr.Instance.SceneData.isBeKilledByBoss1)
+        {
+            Destroy(gameObject);
+        }
+
         curHP = maxHP;
         patrolWaitTimer = patrolWaitTime;
         patrolCenter = transform.position;

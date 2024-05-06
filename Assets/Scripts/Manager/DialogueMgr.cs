@@ -89,7 +89,7 @@ public class DialogueMgr : MonoBehaviour
                 dialogueText.text = "";
                 //CheckName();
                 isScrolling = true;
-                dialogueText.DOText(dialogueLines[currentLine], dialogueLines[currentLine].Length / dialogueSpeed).OnComplete(
+                dialogueText.DOText(dialogueLines[currentLine], dialogueLines[currentLine].Length / dialogueSpeed).SetEase(Ease.Linear).OnComplete(
                     () => { isScrolling = false; });
             }
             else

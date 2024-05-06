@@ -17,6 +17,7 @@ public class SceneData
 
     // boss1
     public bool isFirstMeetBoss1 = true;
+    public bool isBeKilledByBoss1;
     // boss2
     public bool isFirstMeetBoss2 = true;
     // kill boss2
